@@ -34,7 +34,8 @@ a {
     color: unset;
 }
 
-ol, ul {
+ol,
+ul {
     padding-left: 0 !important;
 }
 
@@ -47,7 +48,7 @@ img {
 }
 
 h2 {
-    font-family: 'Montserrat', sans-serif;
+    font-family: "Montserrat", sans-serif;
     font-weight: 800;
     letter-spacing: 2px;
 }

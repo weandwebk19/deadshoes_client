@@ -1,9 +1,16 @@
-var express = require('express');
-var router = express.Router();
+const cartRouter = require('./shopping-cart');
+const productDetailRouter = require('./product-detail');
+const productsRouter = require('./products');
+const loginRouter = require('./login');
+const homeRouter = require('./home');
 
-/* GET home page. */
-router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Express' });
-});
 
-module.exports = router;
+function route(app) {
+  app.use('/shopping-cart', cartRouter);
+  app.use('/product-detail', productDetailRouter);
+  app.use('/products', productsRouter);
+  app.use('/login', loginRouter);
+  app.use('/', homeRouter);
+}
+
+module.exports = route;
