@@ -1,261 +1,292 @@
-
-    <!-- products content -->
-    <div class="bg-main">
-        <div class="container">
-            <div class="box">
-                <div class="breadcumb">
-                    <a href="/">home</a>
-                    <span><i class="fas fa-angle-double-right"></i></span>
-                    <a href="./products">all products</a>
-                </div>
+<!-- products content -->
+<div class="bg-main">
+    <div class="container">
+        <div class="box">
+            <div class="breadcumb">
+                <a href="/">home</a>
+                <span><i class="fas fa-angle-double-right"></i></span>
+                <a href="./products">all products</a>
             </div>
-            <div class="box">
-                <div class="row">
-                    <div class="col-xl-3 filter-col" id="filter-col">
-                        <div class="box filter-toggle-box">
-                            <button class="btn-flat btn-hover" id="filter-close">close</button>
-                        </div>
-                        <div class="box">
-                            <span class="filter-header">
-                                Categories
-                            </span>
-                            <ul class="filter-list">
-                                <li><a href="#">Nike</a></li>
-                                <li><a href="#">Adidas</a></li>
-                                <li><a href="#">Ananas</a></li>
-                                <li><a href="#">Balenciaga</a></li>
-                            </ul>
-                        </div>
-                        <div class="box">
-                            <span class="filter-header">
-                                Price
-                            </span>
-                            <div class="price-range">
-                                <input type="text">
-                                <span>-</span>
-                                <input type="text">
-                            </div>
-                        </div>
-                        <div class="box">
-                            <ul class="filter-list">
-                                <li>
-                                    <div class="group-checkbox">
-                                        <input type="checkbox" id="status1">
-                                        <label for="status1">
-                                            On sale
-                                            <i class="fas fa-check"></i>
-                                        </label>
-                                    </div>
-                                </li>
-                                <li>
-                                    <div class="group-checkbox">
-                                        <input type="checkbox" id="status2">
-                                        <label for="status2">
-                                            In stock
-                                            <i class="fas fa-check"></i>
-                                        </label>
-                                    </div>
-                                </li>
-                                <li>
-                                    <div class="group-checkbox">
-                                        <input type="checkbox" id="status3">
-                                        <label for="status3">
-                                            Featured
-                                            <i class="fas fa-check"></i>
-                                        </label>
-                                    </div>
-                                </li>
-                            </ul>
-                        </div>
-                        <div class="box">
-                            <span class="filter-header">
-                                Brands
-                            </span>
-                            <ul class="filter-list">
-                                <li>
-                                    <div class="group-checkbox">
-                                        <input type="checkbox" id="remember1" checked="checked">
-                                        <label for="remember1">
-                                            JBL
-                                            <i class="fas fa-check"></i>
-                                        </label>
-                                    </div>
-                                </li>
-                                <li>
-                                    <div class="group-checkbox">
-                                        <input type="checkbox" id="remember2">
-                                        <label for="remember2">
-                                            Beat
-                                            <i class="fas fa-check"></i>
-                                        </label>
-                                    </div>
-                                </li>
-                                <li>
-                                    <div class="group-checkbox">
-                                        <input type="checkbox" id="remember3">
-                                        <label for="remember3">
-                                            Logitech
-                                            <i class="fas fa-check"></i>
-                                        </label>
-                                    </div>
-                                </li>
-                                <li>
-                                    <div class="group-checkbox">
-                                        <input type="checkbox" id="remember4">
-                                        <label for="remember4">
-                                            Samsung
-                                            <i class="fas fa-check"></i>
-                                        </label>
-                                    </div>
-                                </li>
-                                <li>
-                                    <div class="group-checkbox">
-                                        <input type="checkbox" id="remember5">
-                                        <label for="remember5">
-                                            Sony
-                                            <i class="fas fa-check"></i>
-                                        </label>
-                                    </div>
-                                </li>
-                            </ul>
-                        </div>
-                        <div class="box">
-                            <span class="filter-header">
-                                Colors
-                            </span>
-                            <ul class="filter-list">
-                                <li>
-                                    <div class="group-checkbox">
-                                        <input type="checkbox" id="remember6">
-                                        <label for="remember6">
-                                            Red
-                                            <i class="fas fa-check"></i>
-                                        </label>
-                                    </div>
-                                </li>
-                                <li>
-                                    <div class="group-checkbox">
-                                        <input type="checkbox" id="remember7">
-                                        <label for="remember7">
-                                            Blue
-                                            <i class="fas fa-check"></i>
-                                        </label>
-                                    </div>
-                                </li>
-                                <li>
-                                    <div class="group-checkbox">
-                                        <input type="checkbox" id="remember8">
-                                        <label for="remember8">
-                                            White
-                                            <i class="fas fa-check"></i>
-                                        </label>
-                                    </div>
-                                </li>
-                                <li>
-                                    <div class="group-checkbox">
-                                        <input type="checkbox" id="remember9">
-                                        <label for="remember9">
-                                            Pink
-                                            <i class="fas fa-check"></i>
-                                        </label>
-                                    </div>
-                                </li>
-                                <li>
-                                    <div class="group-checkbox">
-                                        <input type="checkbox" id="remember10">
-                                        <label for="remember10">
-                                            Yellow
-                                            <i class="fas fa-check"></i>
-                                        </label>
-                                    </div>
-                                </li>
-                            </ul>
-                        </div>
-                        <div class="box">
-                            <span class="filter-header">
-                                customer review
-                            </span>
-                            <ul class="filter-list">
-                                <div class="filter-item">
-                                    <input type="radio" id="star-five" name="rating" class="rating" value="five-star"
-                                        checked>
-                                    <label for="star-five"><span class="rating">
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                        </span>
-                                    </label>
-                                </div>
-                                <div class="filter-item">
-                                    <input type="radio" id="star-four" name="rating" class="rating" value="four-star">
-                                    <label for="star-four"><span class="rating">
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                            <i class="far fa-star"></i>
-                                        </span>
-                                    </label>
-                                </div>
-                                <div class="filter-item">
-                                    <input type="radio" id="star-three" name="rating" class="rating" value="three-star">
-                                    <label for="star-three"><span class="rating">
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                            <i class="far fa-star"></i>
-                                            <i class="far fa-star"></i>
-                                        </span>
-                                    </label>
-                                </div>
-                                <div class="filter-item">
-                                    <input type="radio" id="star-two" name="rating" class="rating" value="two-star">
-                                    <label for="star-two"><span class="rating">
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                            <i class="far fa-star"></i>
-                                            <i class="far fa-star"></i>
-                                            <i class="far fa-star"></i>
-                                        </span>
-                                    </label>
-                                </div>
-                                <div class="filter-item">
-                                    <input type="radio" id="star-one" name="rating" class="rating" value="one-star">
-                                    <label for="star-one"><span class="rating">
-                                            <i class="fas fa-star"></i>
-                                            <i class="far fa-star"></i>
-                                            <i class="far fa-star"></i>
-                                            <i class="far fa-star"></i>
-                                            <i class="far fa-star"></i>
-                                        </span>
-                                    </label>
-                                </div>
-                            </ul>
+        </div>
+        <div class="box">
+            <div class="row">
+                <div class="col-xl-3 filter-col" id="filter-col">
+                    <div class="box filter-toggle-box">
+                        <button class="btn-flat btn-hover" id="filter-close">close</button>
+                    </div>
+                    <div class="box">
+                        <span class="filter-header">
+                            Categories
+                        </span>
+                        <ul class="filter-list">
+                            <li><a href="#">Nike</a></li>
+                            <li><a href="#">Adidas</a></li>
+                            <li><a href="#">Ananas</a></li>
+                            <li><a href="#">Balenciaga</a></li>
+                        </ul>
+                    </div>
+                    <div class="box">
+                        <span class="filter-header">
+                            Price
+                        </span>
+                        <div class="price-range">
+                            <input type="text">
+                            <span>-</span>
+                            <input type="text">
                         </div>
                     </div>
-                    <div class="col-xl-9 col-lg-12">
-                        <div class="box filter-toggle-box">
-                            <button class="btn-flat btn-hover" id="filter-toggle">filter</button>
+                    <div class="box">
+                        <ul class="filter-list">
+                            <li>
+                                <div class="group-checkbox">
+                                    <input type="checkbox" id="status1">
+                                    <label for="status1">
+                                        On sale
+                                        <i class="fas fa-check"></i>
+                                    </label>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="group-checkbox">
+                                    <input type="checkbox" id="status2">
+                                    <label for="status2">
+                                        In stock
+                                        <i class="fas fa-check"></i>
+                                    </label>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="group-checkbox">
+                                    <input type="checkbox" id="status3">
+                                    <label for="status3">
+                                        Featured
+                                        <i class="fas fa-check"></i>
+                                    </label>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="box">
+                        <span class="filter-header">
+                            Brands
+                        </span>
+                        <ul class="filter-list">
+                            <li>
+                                <div class="group-checkbox">
+                                    <input type="checkbox" id="remember1" checked="checked">
+                                    <label for="remember1">
+                                        JBL
+                                        <i class="fas fa-check"></i>
+                                    </label>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="group-checkbox">
+                                    <input type="checkbox" id="remember2">
+                                    <label for="remember2">
+                                        Beat
+                                        <i class="fas fa-check"></i>
+                                    </label>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="group-checkbox">
+                                    <input type="checkbox" id="remember3">
+                                    <label for="remember3">
+                                        Logitech
+                                        <i class="fas fa-check"></i>
+                                    </label>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="group-checkbox">
+                                    <input type="checkbox" id="remember4">
+                                    <label for="remember4">
+                                        Samsung
+                                        <i class="fas fa-check"></i>
+                                    </label>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="group-checkbox">
+                                    <input type="checkbox" id="remember5">
+                                    <label for="remember5">
+                                        Sony
+                                        <i class="fas fa-check"></i>
+                                    </label>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="box">
+                        <span class="filter-header">
+                            Colors
+                        </span>
+                        <ul class="filter-list">
+                            <li>
+                                <div class="group-checkbox">
+                                    <input type="checkbox" id="remember6">
+                                    <label for="remember6">
+                                        Red
+                                        <i class="fas fa-check"></i>
+                                    </label>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="group-checkbox">
+                                    <input type="checkbox" id="remember7">
+                                    <label for="remember7">
+                                        Blue
+                                        <i class="fas fa-check"></i>
+                                    </label>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="group-checkbox">
+                                    <input type="checkbox" id="remember8">
+                                    <label for="remember8">
+                                        White
+                                        <i class="fas fa-check"></i>
+                                    </label>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="group-checkbox">
+                                    <input type="checkbox" id="remember9">
+                                    <label for="remember9">
+                                        Pink
+                                        <i class="fas fa-check"></i>
+                                    </label>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="group-checkbox">
+                                    <input type="checkbox" id="remember10">
+                                    <label for="remember10">
+                                        Yellow
+                                        <i class="fas fa-check"></i>
+                                    </label>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="box">
+                        <span class="filter-header">
+                            customer review
+                        </span>
+                        <ul class="filter-list">
+                            <div class="filter-item">
+                                <input type="radio" id="star-five" name="rating" class="rating" value="five-star"
+                                    checked>
+                                <label for="star-five"><span class="rating">
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                    </span>
+                                </label>
+                            </div>
+                            <div class="filter-item">
+                                <input type="radio" id="star-four" name="rating" class="rating" value="four-star">
+                                <label for="star-four"><span class="rating">
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="far fa-star"></i>
+                                    </span>
+                                </label>
+                            </div>
+                            <div class="filter-item">
+                                <input type="radio" id="star-three" name="rating" class="rating" value="three-star">
+                                <label for="star-three"><span class="rating">
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="far fa-star"></i>
+                                        <i class="far fa-star"></i>
+                                    </span>
+                                </label>
+                            </div>
+                            <div class="filter-item">
+                                <input type="radio" id="star-two" name="rating" class="rating" value="two-star">
+                                <label for="star-two"><span class="rating">
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="far fa-star"></i>
+                                        <i class="far fa-star"></i>
+                                        <i class="far fa-star"></i>
+                                    </span>
+                                </label>
+                            </div>
+                            <div class="filter-item">
+                                <input type="radio" id="star-one" name="rating" class="rating" value="one-star">
+                                <label for="star-one"><span class="rating">
+                                        <i class="fas fa-star"></i>
+                                        <i class="far fa-star"></i>
+                                        <i class="far fa-star"></i>
+                                        <i class="far fa-star"></i>
+                                        <i class="far fa-star"></i>
+                                    </span>
+                                </label>
+                            </div>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-xl-9 col-lg-12">
+                    <div class="box filter-toggle-box">
+                        <button class="btn-flat btn-hover" id="filter-toggle">filter</button>
+                    </div>
+                    <div class="box">
+                        <div class="row gx-4 gy-4" id="products">
+                            {{#each products}}
+                            <div class="col-lg-4 col-md-6 col-sm-12">
+                                <div class="product-card">
+                                    <div class="product-card-img">
+                                        <img src="{{image.[0]}}" alt="">
+                                        <img src="{{image.[1]}}" alt="">
+                                    </div>
+                                    <div class="product-card-info">
+                                        <div class="product-btn">
+                                            <a href="./product-detail" class="btn-flat btn-hover btn-shop-now">shop
+                                                now</a>
+                                            <button class="btn-flat btn-hover btn-cart-add">
+                                                <i class="fas fa-shopping-cart"></i>
+                                            </button>
+                                            <button class="btn-flat btn-hover btn-cart-add">
+                                                <i class="fas fa-heart"></i>
+                                            </button>
+                                        </div>
+                                        <div class="product-card-name">
+                                            {{productname}}
+                                        </div>
+                                        <div class="product-card-price">
+                                            {{!-- <span><del>$${e.old_price}</del></span> --}}
+                                            <span class="curr-price">$${{price}}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            {{else}}
+                                <p>No products available</p>
+                            {{/each}}
                         </div>
-                        <div class="box">
-                            <div class="row gx-4 gy-4" id="products"></div>
-                        </div>
-                        <div class="box">
-                            <ul class="pagination">
-                                <li><a href="#"><i class="fas fa-less-than"></i></a></li>
-                                <li><a href="#" class="active">1</a></li>
-                                <li><a href="#">2</a></li>
-                                <li><a href="#">3</a></li>
-                                <li><a href="#">4</a></li>
-                                <li><a href="#">5</a></li>
-                                <li><a href="#"><i class="fas fa-greater-than"></i></a></li>
-                            </ul>
-                        </div>
+                    </div>
+                    <div class="box">
+                        <ul class="pagination">
+                            <li><a href="#"><i class="fas fa-less-than"></i></a></li>
+                            <li><a href="#" class="active">1</a></li>
+                            <li><a href="#">2</a></li>
+                            <li><a href="#">3</a></li>
+                            <li><a href="#">4</a></li>
+                            <li><a href="#">5</a></li>
+                            <li><a href="#"><i class="fas fa-greater-than"></i></a></li>
+                        </ul>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    <!-- end products content -->
+</div>
+<!-- end products content -->

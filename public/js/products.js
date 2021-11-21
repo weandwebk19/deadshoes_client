@@ -35,8 +35,8 @@ renderProducts = (products) => {
     })
 }
 
-renderProducts(products)
-renderProducts(products)
+//renderProducts(products)
+//renderProducts(products)
 
 let filter_col = document.querySelector('#filter-col')
 
