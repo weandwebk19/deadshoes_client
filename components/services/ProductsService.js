@@ -1,5 +1,10 @@
-const {models} = require('../../models')
+const { models } = require('../../models')
 
-exports.index = () => {
-    return models.products.findAll({raw: true});
+exports.index = (page = 0, itemPerPage = 9) => {
+
+    return models.products.findAll({
+        offset: (page * itemPerPage),
+        limit: itemPerPage,
+        raw: true,
+    });
 };

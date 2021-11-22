@@ -4,7 +4,7 @@ class ProductController {
 
     // [GET] /products
     index = async(req, res) => {
-        const products = await ProductService.index();
+        const products = await ProductService.index(!isNaN(req.query.page) && req.query.page > 0 ? req.query.page - 1 : 0);
         res.render('products', { products });
     }
 
