@@ -3,6 +3,7 @@ const productDetailRouter = require('./product-detail');
 const productsRouter = require('./products');
 const loginRouter = require('./login');
 const homeRouter = require('./home');
+const userRouter = require('./user');
 
 
 function route(app) {
@@ -10,6 +11,7 @@ function route(app) {
   app.use('/product-detail', productDetailRouter);
   app.use('/products', productsRouter);
   app.use('/login', loginRouter);
+  app.use('/user', userRouter);
   app.use('/', homeRouter);
 }
 
