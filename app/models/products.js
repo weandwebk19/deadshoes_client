@@ -30,12 +30,17 @@ module.exports = function(sequelize, DataTypes) {
     image: {
       type: DataTypes.ARRAY(DataTypes.TEXT),
       allowNull: true
+    },
+    branch: {
+      type: DataTypes.STRING(2048),
+      allowNull: true
     }
   }, {
     sequelize,
     tableName: 'products',
     schema: 'public',
-    timestamps: false,
+    timestamps: true,
+    paranoid: true,
     indexes: [
       {
         name: "products_pkey",

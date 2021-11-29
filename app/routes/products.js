@@ -3,7 +3,7 @@ const router = express.Router();
 
 const Products = require('../models/products');
 
-const productController = require('../components/controllers/ProductsController');
+const productController = require('../controllers/ProductsController');
 
 router.post('/filter', productController.filter);
 

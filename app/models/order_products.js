@@ -1,6 +1,15 @@
 const Sequelize = require('sequelize');
 module.exports = function(sequelize, DataTypes) {
-  return sequelize.define('shoessize', {
+  return sequelize.define('order_products', {
+    orderid: {
+      type: DataTypes.UUID,
+      allowNull: false,
+      primaryKey: true,
+      references: {
+        model: 'orders',
+        key: 'orderid'
+      }
+    },
     productid: {
       type: DataTypes.UUID,
       allowNull: false,
@@ -10,27 +19,28 @@ module.exports = function(sequelize, DataTypes) {
         key: 'productid'
       }
     },
-    size: {
-      type: DataTypes.BIGINT,
-      allowNull: false,
-      primaryKey: true
-    },
     amount: {
-      type: DataTypes.DOUBLE,
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      defaultValue: 1
+    },
+    size: {
+      type: DataTypes.INTEGER,
       allowNull: true
     }
   }, {
     sequelize,
-    tableName: 'shoessize',
+    tableName: 'order_products',
     schema: 'public',
-    timestamps: false,
+    timestamps: true,
+    paranoid: true,
     indexes: [
       {
-        name: "shoessize_pkey",
+        name: "order_products_pkey",
         unique: true,
         fields: [
+          { name: "orderid" },
           { name: "productid" },
-          { name: "size" },
         ]
       },
     ]

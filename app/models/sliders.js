@@ -1,43 +1,36 @@
 const Sequelize = require('sequelize');
 module.exports = function(sequelize, DataTypes) {
-  return sequelize.define('feedbacks', {
-    feedbackid: {
+  return sequelize.define('sliders', {
+    sliderid: {
       type: DataTypes.UUID,
       allowNull: false,
       defaultValue: DataTypes.UUIDV4,
       primaryKey: true
     },
-    customer_name: {
+    description: {
       type: DataTypes.STRING(2048),
       allowNull: false
     },
-    content: {
+    image: {
       type: DataTypes.STRING(2048),
       allowNull: false
     },
-    email: {
-      type: DataTypes.STRING(2048),
-      allowNull: true
-    },
-    address: {
-      type: DataTypes.STRING(2048),
-      allowNull: true
-    },
-    phone: {
-      type: DataTypes.STRING(1024),
-      allowNull: true
+    title: {
+      type: DataTypes.CHAR(2048),
+      allowNull: false
     }
   }, {
     sequelize,
-    tableName: 'feedbacks',
+    tableName: 'sliders',
     schema: 'public',
-    timestamps: false,
+    timestamps: true,
+    paranoid: true,
     indexes: [
       {
-        name: "feedbacks_pkey",
+        name: "sliders_pkey",
         unique: true,
         fields: [
-          { name: "feedbackid" },
+          { name: "sliderid" },
         ]
       },
     ]

@@ -1,39 +1,44 @@
 const Sequelize = require('sequelize');
 module.exports = function(sequelize, DataTypes) {
-  return sequelize.define('customers', {
-    customerid: {
+  return sequelize.define('feedbacks', {
+    feedbackid: {
       type: DataTypes.UUID,
       allowNull: false,
       defaultValue: DataTypes.UUIDV4,
       primaryKey: true
     },
-    name: {
+    customer_name: {
       type: DataTypes.STRING(2048),
-      allowNull: true
+      allowNull: false
+    },
+    content: {
+      type: DataTypes.STRING(2048),
+      allowNull: false
     },
     email: {
-      type: DataTypes.STRING(2048),
-      allowNull: true
-    },
-    phone: {
       type: DataTypes.STRING(2048),
       allowNull: true
     },
     address: {
       type: DataTypes.STRING(2048),
       allowNull: true
+    },
+    phone: {
+      type: DataTypes.STRING(1024),
+      allowNull: true
     }
   }, {
     sequelize,
-    tableName: 'customers',
+    tableName: 'feedbacks',
     schema: 'public',
-    timestamps: false,
+    timestamps: true,
+    paranoid: true,
     indexes: [
       {
-        name: "customers_pkey",
+        name: "feedbacks_pkey",
         unique: true,
         fields: [
-          { name: "customerid" },
+          { name: "feedbackid" },
         ]
       },
     ]

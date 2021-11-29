@@ -1,40 +1,48 @@
 const Sequelize = require('sequelize');
 module.exports = function(sequelize, DataTypes) {
-  return sequelize.define('account_customers', {
-    accountid: {
+  return sequelize.define('comments', {
+    comment_id: {
       type: DataTypes.UUID,
       allowNull: false,
       defaultValue: DataTypes.UUIDV4,
       primaryKey: true
     },
-    username: {
+    name: {
       type: DataTypes.STRING(2048),
       allowNull: false
     },
-    password: {
-      type: DataTypes.STRING(1024),
-      allowNull: false,
-      defaultValue: "1234"
+    content: {
+      type: DataTypes.TEXT,
+      allowNull: false
     },
-    customerid: {
+    productid: {
+      type: DataTypes.UUID,
+      allowNull: true,
+      references: {
+        model: 'products',
+        key: 'productid'
+      }
+    },
+    account_id: {
       type: DataTypes.UUID,
       allowNull: false,
       references: {
-        model: 'customers',
-        key: 'customerid'
+        model: 'account_customers',
+        key: 'accountid'
       }
     }
   }, {
     sequelize,
-    tableName: 'account_customers',
+    tableName: 'comments',
     schema: 'public',
-    timestamps: false,
+    timestamps: true,
+    paranoid: true,
     indexes: [
       {
-        name: "account_customers_pkey",
+        name: "comments_pkey",
         unique: true,
         fields: [
-          { name: "accountid" },
+          { name: "comment_id" },
         ]
       },
     ]

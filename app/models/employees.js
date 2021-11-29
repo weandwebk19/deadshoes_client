@@ -26,12 +26,21 @@ module.exports = function(sequelize, DataTypes) {
     phone: {
       type: DataTypes.STRING(2048),
       allowNull: true
+    },
+    avatar: {
+      type: DataTypes.STRING,
+      allowNull: true
+    },
+    address: {
+      type: DataTypes.STRING(2048),
+      allowNull: true
     }
   }, {
     sequelize,
     tableName: 'employees',
     schema: 'public',
-    timestamps: false,
+    timestamps: true,
+    paranoid: true,
     indexes: [
       {
         name: "employees_pkey",

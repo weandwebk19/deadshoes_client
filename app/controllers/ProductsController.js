@@ -21,7 +21,7 @@ class ProductController {
                     pageCount: Math.ceil(products.count / perPage),
                 }
             }
-            res.render('searchProd', view);
+            res.render('products/searchProd', view);
         })
             .catch(next);
     }
@@ -37,7 +37,7 @@ class ProductController {
 
         console.log("my term: " + term);
         products.then(products => {
-            res.render('products', {
+            res.render('products/products', {
                 products: products.rows,
                 pagination: {
                     page: req.query.page || 1,
@@ -68,7 +68,7 @@ class ProductController {
     //                 pageCount: Math.ceil(products.count/perPage),
     //             }
     //         }
-    //         res.render('searchProd', view);
+    //         res.render('products/searchProd', view);
     //     })
     // }
 
@@ -84,7 +84,7 @@ class ProductController {
         // const relatedProducts = ProductService.index(0);
 
         productDetail.then(product => {
-            res.render('product-detail', {
+            res.render('products/product-detail', {
                 product,
                 relatedProd: relatedProd || null
             })
@@ -95,7 +95,7 @@ class ProductController {
     // [GET] /products
     index = async (req, res) => {
         const products = await ProductsService.index(!isNaN(req.query.page) && req.query.page > 0 ? req.query.page - 1 : 0);
-        res.render('products', {
+        res.render('products/products', {
             products,
             pagination: {
                 page: req.query.page || 1,
@@ -107,7 +107,7 @@ class ProductController {
     // [GET] /products/filter=string
     // filter = async (req, res) => {
     //     const products = await ProductService.filter(req.query.filter);
-    //     res.render('products', {
+    //     res.render('products/products', {
     //         products,
     //         pagination: {
     //             page: req.query.page || 1,
