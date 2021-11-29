@@ -5,15 +5,13 @@ const Products = require('../models/products');
 
 const productController = require('../components/controllers/ProductsController');
 
-// // productController.show
-router.get('/:slug', productController.show);
+router.post('/filter', productController.filter);
 
-// productController.index
+// router.post('/search', productController.search);
+router.get('/search', productController.search);
+
+router.get('/:productid', productController.show);
+
 router.get('/', productController.index);
-
-// router.get('/', (req, res) =>
-//     Products.findAll()
-//         .then(products => res.render('products', { products }))
-//         .catch(err => console.log(err)));
 
 module.exports = router;

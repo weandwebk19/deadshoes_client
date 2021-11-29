@@ -39,7 +39,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
     <!-- banner -->
     <div? class="header_agileits">
         <div class="mobile-menu">
-            <h1><a class="navbar-brand" href="index.html"><span>Dead</span> <i>Shoes </i></a></h1>
+            <h1><a class="navbar-brand" href="/"><span>Dead</span> <i>Shoes </i></a></h1>
             <span class="mb-menu-toggle" id="mb-menu-toggle">
                 <i class="mobile-toggle-btn fas fa-bars"></i>
             </span>
@@ -147,17 +147,21 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <div class="mx-auto"></div>
                     <ul class="navbar-nav">
-                        <li class="nav-item">
+                        {{!-- <li class="nav-item">
                             <div class="search">
                                 <input class="search-box" type="text">
                                 <i class="text-white navbar-btn search-btn fas fa-search"></i>
                             </div>
-                        </li>
+                        </li> --}}
                         <li class="nav-item">
                             <a href="/shopping-cart">
                             <i class="text-white navbar-btn cart-btn fas fa-shopping-cart"></i></a>
                         </li>
                         <li class="nav-item">
+                            <a href="/contact">
+                            <i class="text-white navbar-btn contact-btn fas fa-phone"></i></a>
+                        </li>
+                        {{!-- <li class="nav-item">
                             <span class="mb-menu-toggle" id="mb-menu-toggle">
                                 <div class="dropdown">
                                     <i id="dropdownMenuButton1" class="text-white navbar-btn mobile-toggle-btn fas fa-bars" data-bs-toggle="dropdown" aria-expanded="false"></i>
@@ -168,7 +172,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                                     </ul>
                                 </div>
                             </span>
-                        </li>
+                        </li> --}}
                     </ul>
                 </div>
             </div>
@@ -237,7 +241,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                 <div class="col-lg-4 col-md-12 col-sm-12">
                     <a href="/products" class="promotion-box">
                         <div class="text">
-                            <h3>Nike</h3>
+                            <h3>Asics</h3>
                             <button class="btn-flat btn-hover"><span>shop collection</span></button>
                         </div>
                         <img class="promotion-item" src="/images/hero-sneaker03.png" alt="">
@@ -254,7 +258,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                     <h2>Latest product</h2>
                 </div>
                 <div class="row gx-4 gy-4" id="latest-products">
-                    {{#each products}}
+                    {{#each (limit products 8)}}
                     <div class="col-lg-3 col-md-6 col-sm-12">
                         <div class="product-card">
                             <div class="product-card-img">
@@ -325,7 +329,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                     <h2>best selling</h2>
                 </div>
                 <div class="row gx-4 gy-4" id="best-products">
-                    {{#each products}}
+                    {{#each (limit products 8)}}
                     <div class="col-lg-3 col-md-6 col-sm-12">
                         <div class="product-card">
                             <div class="product-card-img">

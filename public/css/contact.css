@@ -1,0 +1,17 @@
+.wrapper.img {
+    background-image: url(../img/contact.jpg);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.label {
+    font-size: 15px;
+    color: #fff;
+}
+
+.btn.btn-primary {
+    background-color: rgb(44, 41, 70);
+    border: 1px solid rgb(44, 41, 70);
+    color: #fff;
+}

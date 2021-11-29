@@ -241,6 +241,12 @@ input:checked + label i {
     justify-content: flex-end;
 }
 
+.pagination .disabled {
+    pointer-events: none;
+    color: #a8a8a8;
+    cursor: default;
+}
+
 .pagination > li > a {
     display: flex;
     align-items: center;
@@ -251,14 +257,15 @@ input:checked + label i {
     font-size: 20px;
 }
 
-.pagination > li > a.active {
+.pagination > li.active {
     background-color: var(--black);
     color: var(--main-bg-color);
+    pointer-events: none;
 }
 
-.pagination > li > a:hover {
+/* .pagination > li:hover {
     border: 2px solid var(--black);
-}
+} */
 
 .product-img {
     display: flex;

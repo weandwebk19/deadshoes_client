@@ -3,8 +3,11 @@ const express = require('express');
 const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
-const exphbs = require('express-handlebars');
 const route = require('./routes');
+const paginate = require('handlebars-paginate');
+const exphbs = require('express-handlebars');
+const helpers = require('handlebars-helpers');
+const multiplehelpers = helpers()
 
 // const indexRouter = require('./routes/index');
 // const usersRouter = require('./routes/users');
@@ -16,16 +19,22 @@ const app = express();
 // view engine setup
 app.engine('.hbs', exphbs({
   extname: '.hbs',
-  helpers: {
-    each_upto: (ary, max, options) => {
-      var result = [];
-      for (var i = 0; i < max; ++i)
-        result.push(ary[i]);
-      return result;
-    }
+  runtimeOptions: {
+    allowProtoPropertiesByDefault: true,
+    allowProtoMethodsByDefault: true,
+  },
+  helpers:
+  {
+    multiplehelpers,
+    paginate: paginate,
+    'limit': (arr, limit) => {
+      if (arr.length > limit) {
+        return arr.slice(0, limit);
+      }
+      return arr;
+    },
   }
-}),
-);
+}));
 
 app.set('view engine', 'hbs');
 app.set('views', path.join(__dirname, 'views'));

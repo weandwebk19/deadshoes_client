@@ -1,3 +1,8 @@
+form button{
+    border:0;
+    background:none;
+}
+
 /* Menu */
 .bottom-header {
     display: flex;
