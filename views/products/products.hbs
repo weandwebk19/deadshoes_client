@@ -30,9 +30,9 @@
                             Price
                         </span>
                         <div class="price-range">
-                            <input type="text">
+                            <input type="text" class="price-range-start" value="0">
                             <span>-</span>
-                            <input type="text">
+                            <input type="text" class="price-range-end" value="1000">
                         </div>
                     </div>
                     {{!-- <div class="box">
@@ -42,7 +42,6 @@
                                     <input type="checkbox" id="status1">
                                     <label for="status1">
                                         On sale
-                                        <i class="fas fa-check"></i>
                                     </label>
                                 </div>
                             </li>
@@ -51,7 +50,6 @@
                                     <input type="checkbox" id="status2">
                                     <label for="status2">
                                         In stock
-                                        <i class="fas fa-check"></i>
                                     </label>
                                 </div>
                             </li>
@@ -60,7 +58,6 @@
                                     <input type="checkbox" id="status3">
                                     <label for="status3">
                                         Featured
-                                        <i class="fas fa-check"></i>
                                     </label>
                                 </div>
                             </li>
@@ -76,7 +73,6 @@
                                     <input type="checkbox" id="remember1" checked="checked">
                                     <label for="remember1">
                                         Nike
-                                        <i class="fas fa-check"></i>
                                     </label>
                                 </div>
                             </li>
@@ -85,7 +81,6 @@
                                     <input type="checkbox" id="remember2">
                                     <label for="remember2">
                                         adidas
-                                        <i class="fas fa-check"></i>
                                     </label>
                                 </div>
                             </li>
@@ -94,7 +89,6 @@
                                     <input type="checkbox" id="remember3">
                                     <label for="remember3">
                                         ananas
-                                        <i class="fas fa-check"></i>
                                     </label>
                                 </div>
                             </li>
@@ -103,7 +97,6 @@
                                     <input type="checkbox" id="remember4">
                                     <label for="remember4">
                                         Fila
-                                        <i class="fas fa-check"></i>
                                     </label>
                                 </div>
                             </li>
@@ -112,7 +105,6 @@
                                     <input type="checkbox" id="remember5">
                                     <label for="remember5">
                                         Balenciaga
-                                        <i class="fas fa-check"></i>
                                     </label>
                                 </div>
                             </li> --}}
@@ -124,53 +116,57 @@
                         </span>
                         <ul class="filter-list">
                             <li>
-                                <div class="group-checkbox">
-                                    <input type="checkbox" value="red" id="box-red">
+                                <div class="group-radio">
+                                    <input type="radio" value="red" id="box-red" name="color-check">
                                     <label for="box-red">
                                         Red
-                                        <i class="fas fa-check"></i>
                                     </label>
                                 </div>
                             </li>
                             <li>
-                                <div class="group-checkbox">
-                                    <input type="checkbox" value="blue" id="box-blue">
+                                <div class="group-radio">
+                                    <input type="radio" value="blue" id="box-blue" name="color-check">
                                     <label for="box-blue">
                                         Blue
-                                        <i class="fas fa-check"></i>
                                     </label>
                                 </div>
                             </li>
                             <li>
-                                <div class="group-checkbox">
-                                    <input type="checkbox" value="white" id="box-white">
+                                <div class="group-radio">
+                                    <input type="radio" value="white" id="box-white" name="color-check">
                                     <label for="box-white">
                                         White
-                                        <i class="fas fa-check"></i>
                                     </label>
                                 </div>
                             </li>
                             <li>
-                                <div class="group-checkbox">
-                                    <input type="checkbox" value="black" id="box-black">
+                                <div class="group-radio">
+                                    <input type="radio" value="black" id="box-black" name="color-check">
                                     <label for="box-black">
                                         Black
-                                        <i class="fas fa-check"></i>
+                                    </label
+                                </div>
+                            </li>
+                            <li>
+                                <div class="group-radio">
+                                    <input type="radio" value="green" id="box-green" name="color-check">
+                                    <label for="box-green">
+                                        Green
                                     </label>
                                 </div>
                             </li>
                             <li>
-                                <div class="group-checkbox">
-                                    <input type="checkbox" value="green" id="box-green">
-                                    <label for="box-green">
-                                        Green
-                                        <i class="fas fa-check"></i>
+                                <div class="group-radio">
+                                    <input type="radio" value="" id="box-all" name="color-check" checked>
+                                    <label for="box-red">
+                                        Tất cả
                                     </label>
                                 </div>
                             </li>
                         </ul>
                     </div>
-                    <div class="box">
+                    <button id="filter-products" type="button" class="btn btn-secondary ms-4">Lọc sản phẩm</button>
+                    {{!-- <div class="box">
                         <span class="filter-header">
                             customer review
                         </span>
@@ -232,7 +228,7 @@
                                 </label>
                             </div>
                         </ul>
-                    </div>
+                    </div> --}}
                 </div>
                 <div class="col-xl-9 col-lg-12" id="products-content">
                     <div class="box filter-toggle-box">
@@ -331,10 +327,7 @@
         });
     });
 
-    var colorCheckboxArr = $("input[type='checkbox']:checked").map(function(){return $(this).val()}).get()
-    console.log(colorCheckboxArr);
-
-    $(document).on("click", "input[type='checkbox']:checked", function () {
+    /*$(document).on("click", "input[type='checkbox']:checked", function () {
         let data = $(this).val();
         $.ajax({
             async: false,
@@ -350,9 +343,37 @@
                 console.log(response);
             }
         });
-    });
+    });*/
 
-    $(document).on("click", "input[type='checkbox']:unchecked", function () {
+    $(document).on("click", "#filter-products", function () {
+        let price_start = parseFloat(document.querySelector('.price-range-start').value);
+        let price_end = parseFloat(document.querySelector('.price-range-end').value);
+        const color = document.querySelector('input[type="radio"]:checked').value;
+        if(price_start < 0 && price_end < 0) {
+            price_start = 0;
+            price_end = 0;
+        }
+        if(price_end < price_start) {
+            price_end = price_start;
+        }
+        $.ajax({
+                async: false,
+                type: "POST",
+                url: "../products/filter",
+                contentType: "application/x-www-form-urlencoded",
+                datatype: "html",
+                data: {color, price_start, price_end},
+                success: function (response) {
+                    $('#products').replaceWith(response);
+                },
+                error: function (response) {
+                    console.log('Có lỗi');
+                }
+            });
+    });
+    
+
+    /*$(document).on("click", "input[type='checkbox']:unchecked", function () {
         let data = $(this).val();
         $.ajax({
             async: false,
@@ -368,7 +389,7 @@
                 console.log(response);
             }
         });
-    });
+    });*/
     
 
 

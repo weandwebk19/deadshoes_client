@@ -16,11 +16,11 @@
     "hbs": "~4.0.4",
     "http-errors": "~1.6.3",
     "morgan": "~1.9.1",
-    "nodemon": "^2.0.15",
     "pg": "^8.7.1",
     "sequelize": "^6.12.0-alpha.1"
   },
   "devDependencies": {
+    "nodemon": "^2.0.15",
     "sequelize-auto": "^0.8.5"
   }
 }

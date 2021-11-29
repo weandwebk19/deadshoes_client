@@ -4,12 +4,36 @@ const ProductsService = require('../services/ProductsService');
 class ProductController {
 
     // [POST] /products/filter/:slug
-    filter(req, res, next) {
+    /*filter(req, res, next) {
         let page = +req.query.page || 1;
         const perPage = 9;
         let color = req.body.data;
 
         const filterProd = ProductsService.filterByColor(color, !isNaN(req.query.page) && req.query.page > 0 ? req.query.page - 1 : 0);
+
+        filterProd.then(products => {
+            let view = {
+                products: products.rows,
+                layout: false,
+                raw: true,
+                pagination: {
+                    page: req.query.page || 1,
+                    pageCount: Math.ceil(products.count / perPage),
+                }
+            }
+            res.render('products/searchProd', view);
+        })
+            .catch(next);
+    }*/
+
+    // [POST] /products/filter/:slug
+     filter(req, res, next) {
+        let page = +req.query.page || 1;
+        const perPage = 9;
+        let price_start = req.body.price_start;
+        let price_end = req.body.price_end;
+        let color = req.body.color;
+        const filterProd = ProductsService.filter(color, price_start, price_end, !isNaN(req.query.page) && req.query.page > 0 ? req.query.page - 1 : 0);
 
         filterProd.then(products => {
             let view = {
