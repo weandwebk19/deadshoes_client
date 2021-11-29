@@ -9,11 +9,6 @@ const exphbs = require('express-handlebars');
 const helpers = require('handlebars-helpers');
 const multiplehelpers = helpers()
 
-// const indexRouter = require('./routes/index');
-// const usersRouter = require('./routes/users');
-// const productsRouter = require('./routes/products');
-// const productDetailRouter = require('./routes/product-detail');
-
 const app = express();
 
 // view engine setup
@@ -47,10 +42,6 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 // routes
 route(app);
-
-// app.use('/', indexRouter);
-// app.use('/products', productsRouter);
-// app.use('/product-detail', productDetailRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

@@ -1,23 +1,24 @@
 const Sequelize = require('sequelize');
 module.exports = function(sequelize, DataTypes) {
-  return sequelize.define('accountsCustomer', {
-    username: {
-      type: DataTypes.STRING(2048),
+  return sequelize.define('account_customers', {
+    accountid: {
+      type: DataTypes.UUID,
       allowNull: false,
+      defaultValue: DataTypes.UUIDV4,
       primaryKey: true
     },
-    password: {
+    username: {
       type: DataTypes.STRING(2048),
+      allowNull: false
+    },
+    password: {
+      type: DataTypes.STRING(1024),
       allowNull: false,
       defaultValue: "1234"
     },
-    email: {
-      type: DataTypes.STRING(2048),
-      allowNull: true
-    },
     customerid: {
       type: DataTypes.UUID,
-      allowNull: true,
+      allowNull: false,
       references: {
         model: 'customers',
         key: 'customerid'
@@ -25,15 +26,15 @@ module.exports = function(sequelize, DataTypes) {
     }
   }, {
     sequelize,
-    tableName: 'accountsCustomer',
+    tableName: 'account_customers',
     schema: 'public',
     timestamps: false,
     indexes: [
       {
-        name: "accounts_pkey",
+        name: "account_customers_pkey",
         unique: true,
         fields: [
-          { name: "username" },
+          { name: "accountid" },
         ]
       },
     ]
