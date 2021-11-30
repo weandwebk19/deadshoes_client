@@ -144,8 +144,7 @@
                                     <input type="radio" value="black" id="box-black" name="color-check">
                                     <label for="box-black">
                                         Black
-                                    </label
-                                </div>
+                                    </label </div>
                             </li>
                             <li>
                                 <div class="group-radio">
@@ -269,15 +268,13 @@
                             <p>No products available</p>
                             {{/each}}
                             <div class="box">
-
                                 <ul class="pagination">
                                     {{#paginate pagination type="previous"}}
                                     <li {{#if disabled}}class="disabled" {{/if}}><a href="?page={{n}}"><i
                                                 class="fas fa-less-than"></i></a></li>
                                     {{/paginate}}
                                     {{#paginate pagination type="middle" limit="5"}}
-                                    <li {{#if active}}class="active" {{/if}}><a
-                                            href="{{#if term}}?term={{term}}&{{/if}} {{#unless term}}?{{/unless}}page={{n}}">{{n}}</a>
+                                    <li {{#if active}}class="active" {{/if}}><a href="?page={{n}}">{{n}}</a>
                                     </li>
                                     {{/paginate}}
                                     {{#paginate pagination type="next"}}
@@ -285,8 +282,6 @@
                                                 class="fas fa-greater-than"></i></a></li>
                                     {{/paginate}}
                                 </ul>
-
-                                <div id="pagination"></div>
                             </div>
                         </div>
                     </div>
@@ -327,71 +322,32 @@
         });
     });
 
-    /*$(document).on("click", "input[type='checkbox']:checked", function () {
-        let data = $(this).val();
-        $.ajax({
-            async: false,
-            type: "POST",
-            url: "../products/filter",
-            contentType: "application/x-www-form-urlencoded",
-            datatype: "html",
-            data: { data: data },
-            success: function (response) {
-                $('#products').replaceWith(response);
-            },
-            error: function (response) {
-                console.log(response);
-            }
-        });
-    });*/
-
     $(document).on("click", "#filter-products", function () {
         let price_start = parseFloat(document.querySelector('.price-range-start').value);
         let price_end = parseFloat(document.querySelector('.price-range-end').value);
         const color = document.querySelector('input[type="radio"]:checked').value;
-        if(price_start < 0 && price_end < 0) {
+        if (price_start < 0 && price_end < 0) {
             price_start = 0;
             price_end = 0;
         }
-        if(price_end < price_start) {
+        if (price_end < price_start) {
             price_end = price_start;
         }
-        $.ajax({
-                async: false,
-                type: "POST",
-                url: "../products/filter",
-                contentType: "application/x-www-form-urlencoded",
-                datatype: "html",
-                data: {color, price_start, price_end},
-                success: function (response) {
-                    $('#products').replaceWith(response);
-                },
-                error: function (response) {
-                    console.log('Có lỗi');
-                }
-            });
-    });
-    
-
-    /*$(document).on("click", "input[type='checkbox']:unchecked", function () {
-        let data = $(this).val();
         $.ajax({
             async: false,
             type: "POST",
             url: "../products/filter",
             contentType: "application/x-www-form-urlencoded",
             datatype: "html",
-            data: { data: data },
+            data: { color, price_start, price_end },
             success: function (response) {
                 $('#products').replaceWith(response);
             },
             error: function (response) {
-                console.log(response);
+                console.log('Có lỗi');
             }
         });
-    });*/
-    
-
+    });
 
 </script>
 <!-- end products content -->

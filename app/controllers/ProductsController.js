@@ -27,7 +27,7 @@ class ProductController {
     }*/
 
     // [POST] /products/filter/:slug
-     filter(req, res, next) {
+    filter(req, res, next) {
         let page = +req.query.page || 1;
         const perPage = 9;
         let price_start = req.body.price_start;
