@@ -52,3 +52,13 @@ h2 {
     font-weight: 800;
     letter-spacing: 2px;
 }
+
+.home-navbar .nav-item {
+    color: #fff;
+    margin-left: 20px;
+}
+
+.home-navbar .nav-item a:hover {
+    text-decoration: underline;
+    color: #fff !important;
+}

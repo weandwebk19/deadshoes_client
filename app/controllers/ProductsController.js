@@ -3,28 +3,28 @@ const ProductsService = require('../services/ProductsService');
 
 class ProductController {
 
-    // [POST] /products/filter/:slug
-    /*filter(req, res, next) {
-        let page = +req.query.page || 1;
-        const perPage = 9;
-        let color = req.body.data;
+    // // [POST] /products/filter/:slug
+    // filter(req, res, next) {
+    //     let page = +req.query.page || 1;
+    //     const perPage = 9;
+    //     let color = req.body.data;
 
-        const filterProd = ProductsService.filterByColor(color, !isNaN(req.query.page) && req.query.page > 0 ? req.query.page - 1 : 0);
+    //     const filterProd = ProductsService.filterByColor(color, !isNaN(req.query.page) && req.query.page > 0 ? req.query.page - 1 : 0);
 
-        filterProd.then(products => {
-            let view = {
-                products: products.rows,
-                layout: false,
-                raw: true,
-                pagination: {
-                    page: req.query.page || 1,
-                    pageCount: Math.ceil(products.count / perPage),
-                }
-            }
-            res.render('products/searchProd', view);
-        })
-            .catch(next);
-    }*/
+    //     filterProd.then(products => {
+    //         let view = {
+    //             products: products.rows,
+    //             layout: false,
+    //             raw: true,
+    //             pagination: {
+    //                 page: req.query.page || 1,
+    //                 pageCount: Math.ceil(products.count / perPage),
+    //             }
+    //         }
+    //         res.render('products/searchProd', view);
+    //     })
+    //         .catch(next);
+    // }
 
     // [POST] /products/filter/:slug
     filter(req, res, next) {

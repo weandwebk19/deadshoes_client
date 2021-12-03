@@ -3,12 +3,22 @@ const ProductService = require('../services/ProductsService');
 
 class SiteController {
 
-    // [GET] /home/contact
+    // [GET] /login
+    login = async (req, res) => {
+        res.render('login', {layout: false});
+    }
+
+    // [GET] /register
+    register = async (req, res) => {
+        res.render('register', {layout: false});
+    }
+
+    // [GET] /contact
     contact = async(req, res) => {
         res.render('contact');
     }
 
-    // [GET] /home
+    // [GET] /
     home = async(req, res) => {
         const products = await ProductService.index();
         res.render('home', {

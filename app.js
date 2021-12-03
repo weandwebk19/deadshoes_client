@@ -1,15 +1,20 @@
 const createError = require('http-errors');
+const dotenv = require('dotenv');
 const express = require('express');
 const path = require('path');
 const cookieParser = require('cookie-parser');
+const bodyParser = require('body-parser');
 const logger = require('morgan');
 const route = require('./app/routes');
 const paginate = require('handlebars-paginate');
 const exphbs = require('express-handlebars');
 const helpers = require('handlebars-helpers');
-const multiplehelpers = helpers()
+const multiplehelpers = helpers();
+const session = require('express-session');
+const passport = require('./app/auth/passport');
 
 const app = express();
+dotenv.config({path: '.env'});
 
 // view engine setup
 app.engine('.hbs', exphbs({
@@ -31,14 +36,19 @@ app.engine('.hbs', exphbs({
   }
 }));
 
+app.use(logger('dev'));
+app.use(express.json());
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(cookieParser());
+app.use(express.static(path.join(__dirname, 'public')));
+
 app.set('view engine', 'hbs');
 app.set('views', path.join(__dirname, 'views'));
 
-app.use(logger('dev'));
-app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
-app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
+
+app.use(session ({secret: process.env.SESSION_SECRET}));
+app.use(passport.initialize());
+app.use(passport.session());
 
 // routes
 route(app);
