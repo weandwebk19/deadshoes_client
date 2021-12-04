@@ -3,19 +3,19 @@
     <form>
         <div class="mb-3">
             <label for="userName" class="form-label">Họ và tên</label>
-            <input type="text" class="form-control" id="userName" >
+            <input type="text" class="form-control" value="{{customer.name}}" id="userName" >
         </div>
         <div class="mb-3">
             <label for="userEmail" class="form-label">Địa chỉ Email</label>
-            <input type="text" class="form-control" id="userEmail">
+            <input type="text" class="form-control" value="{{customer.email}}" id="userEmail">
         </div>
         <div class="mb-3">
             <label for="userAdress" class="form-label">Địa chỉ (Địa chỉ giao hàng)</label>
-            <input type="text" class="form-control" id="userAdress">
+            <input type="text" class="form-control" value="{{customer.address}}" id="userAdress">
         </div>
         <div class="mb-3">
             <label for="userPhone" class="form-label">Số điện thoại</label>
-            <input type="text" class="form-control" id="userPhone">
+            <input type="text" class="form-control" value="{{customer.phone}}"id="userPhone">
         </div>
         <button type="submit" class="btn btn-primary">Lưu thay đổi</button>
     </form>

@@ -10,6 +10,10 @@ body {
     border: none
 }
 
+.text-red {
+    color: rgb(211, 24, 24);
+}
+
 .box {
     width: 500px;
     padding: 40px;

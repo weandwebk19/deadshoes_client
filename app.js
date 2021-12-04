@@ -12,6 +12,7 @@ const helpers = require('handlebars-helpers');
 const multiplehelpers = helpers();
 const session = require('express-session');
 const passport = require('./app/auth/passport');
+const bcrypt = require('bcrypt');
 
 const app = express();
 dotenv.config({path: '.env'});
@@ -49,6 +50,12 @@ app.set('views', path.join(__dirname, 'views'));
 app.use(session ({secret: process.env.SESSION_SECRET}));
 app.use(passport.initialize());
 app.use(passport.session());
+
+// middlewares
+app.use(function(req,res,next) {
+  res.locals.user = req.user;
+  next();
+})
 
 // routes
 route(app);

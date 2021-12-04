@@ -22,6 +22,9 @@
                         <p class="text-muted"> Please enter your username and password!</p>
                         <input type="text" placeholder="Username" name="username">
                         <input type="password" placeholder="Password" name="password">
+                        {{#if wrongPassword}}
+                        <p class="text-red">Username and password do not match</p>
+                        {{/if}}
                         <a class="forgot text-muted" href="#">                                    Forgot password?</a>
                         <button class="btn" type="submit">Login</button>
                         <p class="text-muted"> Don't have an account? <a class="forgot text-muted"
