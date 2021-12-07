@@ -1,6 +1,7 @@
 const createError = require('http-errors');
 const dotenv = require('dotenv');
 const express = require('express');
+const favicon = require('serve-favicon');
 const path = require('path');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
@@ -16,6 +17,9 @@ const bcrypt = require('bcrypt');
 
 const app = express();
 dotenv.config({path: '.env'});
+
+// favicon
+app.use(favicon(path.join(__dirname, 'public/images','favicon.ico')));
 
 // view engine setup
 app.engine('.hbs', exphbs({

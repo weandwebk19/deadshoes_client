@@ -30,4 +30,19 @@
     {{else}}
     <p>No products available</p>
     {{/each}}
+    <div class="box">
+        <ul class="pagination">
+            {{#paginate pagination type="previous"}}
+            <li {{#if disabled}}class="disabled" {{/if}}><a href="?page={{n}}"><i class="fas fa-less-than"></i></a></li>
+            {{/paginate}}
+            {{#paginate pagination type="middle" limit="5"}}
+            <li {{#if active}}class="active" {{/if}}><a href="?page={{n}}">{{n}}</a>
+            </li>
+            {{/paginate}}
+            {{#paginate pagination type="next"}}
+            <li {{#if disabled}}class="disabled" {{/if}}><a href="?page={{n}}"><i class="fas fa-greater-than"></i></a>
+            </li>
+            {{/paginate}}
+        </ul>
+    </div>
 </div>
