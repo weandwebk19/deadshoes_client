@@ -27,10 +27,6 @@ module.exports = function(sequelize, DataTypes) {
       type: DataTypes.STRING(2048),
       allowNull: true
     },
-    avatar: {
-      type: DataTypes.STRING,
-      allowNull: true
-    },
     address: {
       type: DataTypes.STRING(2048),
       allowNull: true
