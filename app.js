@@ -16,10 +16,10 @@ const passport = require('./app/auth/passport');
 const bcrypt = require('bcrypt');
 
 const app = express();
-dotenv.config({path: '.env'});
+dotenv.config({ path: '.env' });
 
 // favicon
-app.use(favicon(path.join(__dirname, 'public/images','favicon.ico')));
+app.use(favicon(path.join(__dirname, 'public/images', 'favicon.ico')));
 
 // view engine setup
 app.engine('.hbs', exphbs({
@@ -38,12 +38,73 @@ app.engine('.hbs', exphbs({
       }
       return arr;
     },
+    sum: function (a, b) {
+      return a + b;
+    },
+    sub: function (a, b) {
+      return a - b;
+    },
+    mul: function (a, b) { return a * b; },
+    paginate: function (totalPages, totalItems, currentPage, options) {
+      let result = [];
+
+      if (currentPage == 0 || currentPage == 1 || currentPage == 2) {
+        const displayPages = totalPages < 6 ? totalPages : 5;
+        for (let i = 0; i < displayPages; i++) {
+          if (i < totalPages)
+            result.push(i);
+        }
+      }
+      else {
+        const displayPages = totalPages < 6 ? totalPages : 5;
+        for (let i = -2; i < displayPages - 2; i++) {
+          if (currentPage + i < totalPages)
+            result.push(currentPage + i);
+        }
+      }
+      return options.fn(result);
+    },
+
+    calcLimit: function (totalPages, totalItems, currentPage) {
+      let limit;
+      const temp = totalItems / totalPages;
+      if (temp < 11) {
+        limit = 10 * (currentPage + 1);
+      }
+      else if (temp < 26) {
+        limit = 25 * (currentPage + 1);
+      } else if (temp < 51) {
+        limit = 50 * (currentPage + 1);
+      }
+      else if (temp < 101) {
+        limit = 100 * (currentPage + 1);
+      }
+      return limit > totalItems ? totalItems : limit;
+    },
+
+    calcOffset: function (totalPages, totalItems, currentPage) {
+      let limit;
+      const temp = totalItems / totalPages;
+      if (temp < 11) {
+        limit = 10;
+      }
+      else if (temp < 26) {
+        limit = 25;
+      } else if (temp < 51) {
+        limit = 50;
+      }
+      else if (temp < 101) {
+        limit = 100;
+      }
+
+      return limit * currentPage + 1;
+    },
   }
 }));
 
 app.use(logger('dev'));
 app.use(express.json());
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
@@ -51,12 +112,12 @@ app.set('view engine', 'hbs');
 app.set('views', path.join(__dirname, 'views'));
 
 
-app.use(session ({secret: process.env.SESSION_SECRET}));
+app.use(session({ secret: process.env.SESSION_SECRET }));
 app.use(passport.initialize());
 app.use(passport.session());
 
 // middlewares
-app.use(function(req,res,next) {
+app.use(function (req, res, next) {
   res.locals.user = req.user;
   next();
 })
