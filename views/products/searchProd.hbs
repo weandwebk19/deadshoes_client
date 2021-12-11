@@ -22,7 +22,7 @@
                 </div>
                 <div class="product-card-price">
                     {{!-- <span><del>$${e.old_price}</del></span> --}}
-                    <span class="curr-price">$${{price}}</span>
+                    <span class="curr-price">${{price}}</span>
                 </div>
             </div>
         </div>
@@ -32,17 +32,21 @@
     {{/each}}
     <div class="box">
         <ul class="pagination">
-            {{#paginate pagination type="previous"}}
-            <li {{#if disabled}}class="disabled" {{/if}}><a href="?page={{n}}"><i class="fas fa-less-than"></i></a></li>
-            {{/paginate}}
-            {{#paginate pagination type="middle" limit="5"}}
-            <li {{#if active}}class="active" {{/if}}><a href="?page={{n}}">{{n}}</a>
+            <li class="page-item previous" id="dataTable_previous">
+                <a href="" aria-controls="dataTable" data-page="{{sub currentPage 1}}" tabindex="0" class="page-link"><i
+                        class="fas fa-less-than"></i></a>
+
+                {{#paginate totalPages totalItems currentPage}}
+                {{#each .}}
+            <li class="page-item page"><a href="" aria-controls="dataTable" data-page="{{this}}" tabindex="0"
+                    class="page-link">{{sum this 1}}</a>
             </li>
+            {{/each}}
             {{/paginate}}
-            {{#paginate pagination type="next"}}
-            <li {{#if disabled}}class="disabled" {{/if}}><a href="?page={{n}}"><i class="fas fa-greater-than"></i></a>
-            </li>
-            {{/paginate}}
+
+            <li class="page-item next" id="dataTable_next"><a href="" aria-controls="dataTable"
+                    data-page="{{sum currentPage 1}}" tabindex="0" class="page-link"><i
+                        class="fas fa-greater-than"></i></a></li>
         </ul>
     </div>
 </div>
