@@ -157,8 +157,8 @@
                             <li>
                                 <div class="group-radio">
                                     <input type="radio" value="" id="box-all" name="color-check" checked>
-                                    <label for="box-red">
-                                        Tất cả
+                                    <label for="box-all">
+                                        All
                                     </label>
                                 </div>
                             </li>
@@ -247,10 +247,10 @@
                                             <a href="/products/{{productid}}"
                                                 class="btn-flat btn-hover btn-shop-now">shop
                                                 now</a>
-                                            <button class="btn-flat btn-hover btn-cart-add">
+                                            <button class="btn-flat btn-hover btn-cart-add" value="{{productid}}">
                                                 <i class="fas fa-shopping-cart"></i>
                                             </button>
-                                            <button class="btn-flat btn-hover btn-cart-add">
+                                            <button class="btn-flat btn-hover btn-wishlít-add" value="{{productid}}">
                                                 <i class="fas fa-heart"></i>
                                             </button>
                                         </div>
@@ -273,22 +273,25 @@
                                         <ul class="pagination">
                                             <li class="page-item previous" id="dataTable_previous">
                                                 <a href="" aria-controls="dataTable" data-page="{{sub currentPage 1}}"
-                                                    tabindex="0" class="page-link"><i class="fas fa-less-than"></i></a>
-
-                                                {{#paginate totalPages totalItems currentPage}}
-                                                {{#each .}}
+                                                    tabindex="0" class="page-link"><i data-page="{{sub currentPage 1}}"
+                                                        tabindex="0" class="fas fa-less-than"></i></a>
+                                            </li>
+                                            {{#paginate totalPages totalItems currentPage}}
+                                            {{#each .}}
                                             <li class="page-item page"><a href="" aria-controls="dataTable"
-                                                    data-page="{{this}}" tabindex="0" class="page-link">{{sum this
+                                                    data-page="{{sum this 1}}" tabindex="0" class="page-link">{{sum this
                                                     1}}</a>
                                             </li>
                                             {{/each}}
                                             {{/paginate}}
 
-                                            <li class="page-item next" id="dataTable_next"><a href=""
-                                                    aria-controls="dataTable" data-page="{{sum currentPage 1}}"
-                                                    tabindex="0" class="page-link"><i
-                                                        class="fas fa-greater-than"></i></a></li>
+                                            <li class="page-item next" id="dataTable_next">
+                                                <a href="" aria-controls="dataTable" data-page="{{sum currentPage 1}}"
+                                                    tabindex="0" class="page-link"><i data-page="{{sum currentPage 1}}"
+                                                        tabindex="0" class="fas fa-greater-than"></i></a>
+                                            </li>
                                         </ul>
+
                                     </div>
                                 </div>
                             </div>
@@ -366,5 +369,6 @@
     updatePaginate({{ totalPages }}, {{ currentPage }});
     updateSelectSize({{ totalPages }}, {{ totalItems }});
 </script>
+
 
 <!-- end products content -->

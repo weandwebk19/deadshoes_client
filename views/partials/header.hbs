@@ -117,7 +117,11 @@
                     </li>
                     <li class="nav-item">
                         <a href="/shopping-cart">
-                            <i class="text-white navbar-btn cart-btn fas fa-shopping-cart"></i></a>
+                            <i class="text-white navbar-btn cart-btn fas fa-shopping-cart"></i>
+                            {{#if cart}}
+                            <span class="cart-count">{{cart.length}}</span>
+                            {{/if}}
+                            </a>
                     </li>
                     <li class="nav-item">
                         <span class="mb-menu-toggle" id="mb-menu-toggle">

@@ -17,10 +17,10 @@ pageLinks.on('click', (event) => {
 function updatePaginate(totalPages, currentPage) {
     $(`.page-link[data-page=${currentPage}]`).parent('li').addClass('active');
 
-    if (currentPage < 1 || isNaN(totalPages)) {
+    if (currentPage < 2 || isNaN(totalPages)) {
         pagePrev.addClass('disabled');
     };
-    if (currentPage > totalPages - 2 || isNaN(totalPages)) {
+    if (currentPage > totalPages - 1 || isNaN(totalPages)) {
         pageNext.addClass('disabled');
     };
 }
@@ -55,8 +55,6 @@ searchForm.on('submit', function (event) {
     const url = updateQueryStringParameter(event.target.baseURI, 'term', $('input[class="search-box"]').val());
     window.location = url;
 })
-
-
 
 function updateQueryStringParameter(uri, key, value) {
     let re = new RegExp("([?&])" + key + "=.*?(&|$)", "i");

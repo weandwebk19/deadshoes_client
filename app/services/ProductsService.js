@@ -2,26 +2,26 @@ const { models } = require('../models');
 const Sequelize = require('sequelize');
 const Op = Sequelize.Op;
 
-exports.pagin = async (term, color, price_start, price_end, limit = 2, skip) => {
-    const condition = (term||color||price_start||price_end) ? {
-        [Op.or]: [
-            { productname: { [Op.iLike]: `%${term}%` } },
-            { color: { [Op.iLike]: `%${color}%` } },
-            { price: {
-                [Op.between]: [price_start, price_end]
-            } }
-        ]
-    } : null;
-    const result = await models.products.findAndCountAll({
-        where: condition,
-        limit: 2,
-        offset: skip,
-        raw: true,
-    });
+// exports.pagin = async (term, color, price_start, price_end, limit = 2, skip) => {
+//     const condition = (term||color||price_start||price_end) ? {
+//         [Op.or]: [
+//             { productname: { [Op.iLike]: `%${term}%` } },
+//             { color: { [Op.iLike]: `%${color}%` } },
+//             { price: {
+//                 [Op.between]: [price_start, price_end]
+//             } }
+//         ]
+//     } : null;
+//     const result = await models.products.findAndCountAll({
+//         where: condition,
+//         limit: 2,
+//         offset: skip,
+//         raw: true,
+//     });
 
-    console.log(result);
-    return result;
-}
+//     console.log(result);
+//     return result;
+// }
 
 exports.listProduct = (term, limit, offset) => {
     const condition = term ? {

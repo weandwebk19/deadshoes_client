@@ -12,8 +12,10 @@ const exphbs = require('express-handlebars');
 const helpers = require('handlebars-helpers');
 const multiplehelpers = helpers();
 const session = require('express-session');
-const passport = require('./app/auth/passport');
+const passport = require('./app/middleware/auth/passport');
 const bcrypt = require('bcrypt');
+const sessionHandler = require('./app/middleware/auth/sessionHandler');
+const mylogger = require('./app/middleware/auth/logger');
 
 const app = express();
 dotenv.config({ path: '.env' });
@@ -102,7 +104,7 @@ app.engine('.hbs', exphbs({
   }
 }));
 
-app.use(logger('dev'));
+//app.use(logger('dev'));
 app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
@@ -111,8 +113,14 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.set('view engine', 'hbs');
 app.set('views', path.join(__dirname, 'views'));
 
-
-app.use(session({ secret: process.env.SESSION_SECRET }));
+app.use(session({
+  cookie: {
+    path: '/', 
+    httpOnly: false,
+    maxAge: 60000
+  },
+  secret: process.env.SESSION_SECRET
+}));
 app.use(passport.initialize());
 app.use(passport.session());
 
@@ -121,6 +129,9 @@ app.use(function (req, res, next) {
   res.locals.user = req.user;
   next();
 })
+
+app.use(sessionHandler);
+app.use(mylogger);
 
 // routes
 route(app);

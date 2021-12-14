@@ -114,6 +114,18 @@
     line-height: 17px;
 }
 
+.cart-count {
+    content: "";
+    position: absolute;
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+    background-color: var(--red);
+    color: #fff;
+    font-size: 10px;
+    text-align: center
+}
+
 .sp-item-name {
     font-size: 55px;
     font-weight: 600;

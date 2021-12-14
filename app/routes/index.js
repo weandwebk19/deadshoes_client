@@ -10,7 +10,7 @@ const userRouter = require('./user-information');
 
 
 function route(app) {
-  app.use('/shopping-cart', cartRouter);
+  app.use('/cart', cartRouter);
   app.use('/product-detail', productDetailRouter);
   app.use('/products', productsRouter);
   app.use('/user-information', userRouter);
