@@ -1,7 +1,3 @@
-const { models } = require('../models');
-const Sequelize = require('sequelize');
-const Op = Sequelize.Op;
-
 const { getPagination } = require('../../public/js/pagination');
 const { getPagingData } = require('../../public/js/pagination');
 // const { models } = require('../models');
@@ -13,7 +9,7 @@ class ProductController {
     // [GET] /products
     list = async (req, res) => {
         const { page, size, term } = req.query;
-        const { limit, offset } = getPagination(page, size);
+        const { limit, offset } = getPagination(page-1, size);
 
         await productsService.listProduct(term, limit, offset)
             .then((data) => {

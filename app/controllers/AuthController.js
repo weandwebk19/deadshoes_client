@@ -1,5 +1,5 @@
 const { response } = require('express');
-const passport = require('../auth/passport');
+const passport = require('../middleware/auth/passport');
 
 const authService = require('../services/AuthService');
 
