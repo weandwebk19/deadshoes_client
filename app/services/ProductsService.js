@@ -65,6 +65,16 @@ exports.filter = async (color, price_start, price_end, limit, offset) => {
 //     });
 // }
 
+exports.loadShoeSize = async(id) => {
+    return await models.shoessize.findAndCountAll({
+        where: {
+            productid: id
+        },
+        order: [['size', 'ASC']],
+        raw: true
+    });
+}
+
 exports.searchByName = (term, page = 0, itemPerPage = 9) => {
     return models.products.findAndCountAll({
         where: {
@@ -76,8 +86,8 @@ exports.searchByName = (term, page = 0, itemPerPage = 9) => {
     });
 }
 
-exports.show = (id) => {
-    return models.products.findOne({
+exports.show = async (id) => {
+    return await models.products.findOne({
         where: { productid: id },
         raw: true,
     });

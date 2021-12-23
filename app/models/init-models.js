@@ -24,8 +24,6 @@ function initModels(sequelize) {
   var shoessize = _shoessize(sequelize, DataTypes);
   var sliders = _sliders(sequelize, DataTypes);
 
-  orders.belongsToMany(products, { as: 'productid_products', through: order_products, foreignKey: "orderid", otherKey: "productid" });
-  products.belongsToMany(orders, { as: 'orderid_orders', through: order_products, foreignKey: "productid", otherKey: "orderid" });
   comments.belongsTo(account_customers, { as: "account", foreignKey: "account_id"});
   account_customers.hasMany(comments, { as: "comments", foreignKey: "account_id"});
   account_customers.belongsTo(customers, { as: "customer", foreignKey: "customerid"});
@@ -38,10 +36,12 @@ function initModels(sequelize) {
   orders.hasMany(order_products, { as: "order_products", foreignKey: "orderid"});
   comments.belongsTo(products, { as: "product", foreignKey: "productid"});
   products.hasMany(comments, { as: "comments", foreignKey: "productid"});
-  order_products.belongsTo(products, { as: "product", foreignKey: "productid"});
-  products.hasMany(order_products, { as: "order_products", foreignKey: "productid"});
   shoessize.belongsTo(products, { as: "product", foreignKey: "productid"});
   products.hasMany(shoessize, { as: "shoessizes", foreignKey: "productid"});
+  order_products.belongsTo(shoessize, { as: "product", foreignKey: "productid"});
+  shoessize.hasMany(order_products, { as: "order_products", foreignKey: "productid"});
+  order_products.belongsTo(shoessize, { as: "size_shoessize", foreignKey: "size"});
+  shoessize.hasMany(order_products, { as: "size_order_products", foreignKey: "size"});
 
   return {
     account_customers,

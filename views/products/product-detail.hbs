@@ -7,24 +7,24 @@
                 <span><i class="fas fa-angle-double-right"></i></span>
                 <a href="/products">all products</a>
                 <span><i class="fas fa-angle-double-right"></i></span>
-                <a href="#">{{product.productname}}</a>
+                <a href="#">{{productDetail.productname}}</a>
             </div>
         </div>
         <div class="row product-row">
             <div class="col-lg-5 col-md-12">
                 <div class="product-img" id="product-img">
-                    <img src="{{product.image.[0]}}" alt="">
+                    <img src="{{productDetail.image.[0]}}" alt="">
                 </div>
                 <div class="box">
                     <div class="product-img-list">
                         <div class="product-img-item">
-                            <img src="{{product.image.[0]}}" alt="">
+                            <img src="{{productDetail.image.[0]}}" alt="">
                         </div>
                         <div class="product-img-item">
-                            <img src="{{product.image.[1]}}" alt="">
+                            <img src="{{productDetail.image.[1]}}" alt="">
                         </div>
                         <div class="product-img-item">
-                            <img src="{{product.image.[2]}}" alt="">
+                            <img src="{{productDetail.image.[2]}}" alt="">
                         </div>
                     </div>
                 </div>
@@ -32,7 +32,7 @@
             <div class="col-lg-7 col-md-12">
                 <div class="product-info">
                     <h1>
-                        {{product.productname}}
+                        {{productDetail.productname}}
                     </h1>
                     <div class="product-info-detail">
                         <span class="product-info-detail-title">Brand:</span>
@@ -49,20 +49,54 @@
                         </span>
                     </div>
                     <p class="product-description">
-                        {{description}}
+                        {{productDetail.description}}
                     </p>
-                    <div class="product-info-price">$2345</div>
+                    <div class="product-info-price">${{productDetail.price}}</div>
                     <div class="product-quantity-wrapper">
                         <span class="product-quantity-btn">
                             <i class="fas fa-minus"></i>
                         </span>
-                        <span class="product-quantity">1</span>
+                        <span class="product-quantity" data-count="1">1</span>
                         <span class="product-quantity-btn">
                             <i class="fas fa-plus"></i>
                         </span>
                     </div>
+                    <div class="product-info-shoesize d-flex flex-row">
+                        {{#each shoesize}}
+                        <div class="button-labels" index="{{@index}}">
+                            <input class="shoesize-radio" type="radio" id="shoesize-{{this.size}}-checkbox" name="size"
+                                value="{{this.size}}">
+                            <label class="shoesize-box" for="shoesize-{{this.size}}-checkbox">{{this.size}}</label>
+                        </div>
+                        {{/each}}
+                    </div>
+                    {{#each shoesize}}
+                    <div class="shoesize-stock" index="{{@index}}">Only {{this.amount}} left.</div>
+                    {{/each}}
                     <div>
-                        <button class="btn-flat btn-hover">add to cart</button>
+                        <button class="btn-flat btn-hover btn-cart-add" data-bs-toggle="modal" data-bs-target="#cart-add-modal"
+                            value="{{productDetail.productid}}">add to
+                            cart</button>
+                        <div class="modal fade" id="cart-add-modal" tabindex="-1" aria-labelledby="exampleModalLabel"
+                            aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLabel">Thanks you!</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                            aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        Successfully added to cart (*￣3￣)╭
+                                    </div>
+                                    {{!-- <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary"
+                                            data-bs-dismiss="modal">Close</button>
+                                        <button type="button" class="btn btn-primary">Save changes</button>
+                                    </div> --}}
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -86,7 +120,7 @@
                         adipisicing elit. Ut quaerat eum veniam doloremque nihil repudiandae odio ratione culpa libero
                         tempora. Expedita, quo molestias. Minus illo quis dignissimos aliquid sapiente error!
                     </p>
-                    <img src="{{product.image.[1]}}" alt="">
+                    <img src="{{productDetail.image.[1]}}" alt="">
                     <p>
                         Lorem ipsum dolor sit amet consectetur adipisicing elit. Nobis accusantium officia, quae fuga in
                         exercitationem aliquam labore ex doloribus repellendus beatae facilis ipsam. Veritatis vero
@@ -97,7 +131,7 @@
                         sint error possimus commodi incidunt suscipit sit voluptatum quibusdam enim eligendi animi
                         deserunt recusandae earum natus voluptas blanditiis?
                     </p>
-                    <img src="{{product.image.[0]}}" alt="">
+                    <img src="{{productDetail.image.[0]}}" alt="">
                     <p>
                         Lorem ipsum dolor sit amet consectetur adipisicing elit. Modi ullam quam fugit veniam ipsum
                         recusandae incidunt, ex ratione, magnam labore ad tenetur officia! In, totam. Molestias sapiente
@@ -178,60 +212,68 @@
                         voluptas vero? Aspernatur!
                     </div>
                 </div>
+                {{#if user}}
                 <div class="mt-5 form-floating">
                     <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea"></textarea>
                     <label for="floatingTextarea">Comments</label>
                 </div>
-                {{!-- <div class="box">
-                    <ul class="pagination">
-                        <li><a href="#"><i class='bx bxs-chevron-left'></i></a></li>
-                        <li><a href="#" class="active">1</a></li>
-                        <li><a href="#">2</a></li>
-                        <li><a href="#">3</a></li>
-                        <li><a href="#">4</a></li>
-                        <li><a href="#">5</a></li>
-                        <li><a href="#"><i class='bx bxs-chevron-right'></i></a></li>
-                    </ul>
-                </div> --}}
+                {{else}}
+                <div class="mt-5 text-info">
+                    <a href="/login">Login</a> to leave a comment.
+                    {{/if}}
+
+                    {{!-- <div class="box">
+                        <ul class="pagination">
+                            <li><a href="#"><i class='bx bxs-chevron-left'></i></a></li>
+                            <li><a href="#" class="active">1</a></li>
+                            <li><a href="#">2</a></li>
+                            <li><a href="#">3</a></li>
+                            <li><a href="#">4</a></li>
+                            <li><a href="#">5</a></li>
+                            <li><a href="#"><i class='bx bxs-chevron-right'></i></a></li>
+                        </ul>
+                    </div> --}}
+                </div>
             </div>
-        </div>
-        <div class="box">
-            <div class="box-header">
-                related products
-            </div>
-            <div class="row" id="related-products">
-                {{#each relatedProd }}
-                <div class="col-lg-3 col-md-6 col-sm-12">
-                    <div class="product-card">
-                        <div class="product-card-img">
-                            <img src="{{image.[0]}}" alt="">
-                            <img src="{{image.[1]}}" alt="">
-                        </div>
-                        <div class="product-card-info">
-                            <div class="product-btn">
-                                <a href="./product-detail" class="btn-flat btn-hover btn-shop-now">shop now</a>
-                                <button class="btn-flat btn-hover btn-cart-add">
-                                    <i class="fas fa-shopping-cart"></i>
-                                </button>
-                                <button class="btn-flat btn-hover btn-cart-add">
-                                    <i class="fas fa-heart"></i>
-                                </button>
+            <div class="box">
+                <div class="box-header">
+                    related products
+                </div>
+                <div class="row" id="related-products">
+                    {{#each relatedProd }}
+                    <div class="col-lg-3 col-md-6 col-sm-12">
+                        <div class="product-card">
+                            <div class="product-card-img">
+                                <img src="{{image.[0]}}" alt="">
+                                <img src="{{image.[1]}}" alt="">
                             </div>
-                            <div class="product-card-name">
-                                {{productname}}
-                            </div>
-                            <div class="product-card-price">
-                                {{!-- <span><del>$300</del></span> --}}
-                                <span class="curr-price">${{price}}</span>
+                            <div class="product-card-info">
+                                <div class="product-btn">
+                                    <a href="./product-detail" class="btn-flat btn-hover btn-shop-now">shop now</a>
+                                    <button class="btn-flat btn-hover btn-cart-add" value="{{productid}}">
+                                        <i class="fas fa-shopping-cart"></i>
+                                    </button>
+                                    <button class="btn-flat btn-hover btn-wishlít-add" value="{{productid}}">
+                                        <i class="fas fa-heart"></i>
+                                    </button>
+                                </div>
+                                <div class="product-card-name">
+                                    {{productname}}
+                                </div>
+                                <div class="product-card-price">
+                                    {{!-- <span><del>$300</del></span> --}}
+                                    <span class="curr-price">${{price}}</span>
+                                </div>
                             </div>
                         </div>
                     </div>
+                    {{else}}
+                    <p>No products found</p>
+                    {{/each}}
                 </div>
-                {{else}}
-                <p>No products found</p>
-                {{/each}}
             </div>
         </div>
     </div>
-</div>
-<!-- end product-detail content -->
+    <!-- end product-detail content -->
+    <script src="/js/jquery-3.6.0.min.js"></script>
+    <script src="/js/product-detail.js"></script>

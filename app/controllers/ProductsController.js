@@ -1,7 +1,7 @@
 const { getPagination } = require('../../public/js/pagination');
 const { getPagingData } = require('../../public/js/pagination');
-// const { models } = require('../models');
 const productsService = require('../services/ProductsService');
+const CartService = require('../services/CartService');
 
 
 class ProductController {
@@ -9,21 +9,48 @@ class ProductController {
     // [GET] /products
     list = async (req, res) => {
         const { page, size, term } = req.query;
-        const { limit, offset } = getPagination(page-1, size);
+        const { limit, offset } = getPagination(page - 1, size);
+        const { user } = req;
+        let cart = req.session.unauthId;
+        const { productid } = req.params;
+        let shoesize = req.body.size;
+        // console.log(user, cart);
+        // console.log('shoesize ' + shoesize);
 
-        await productsService.listProduct(term, limit, offset)
-            .then((data) => {
-                const response = getPagingData(data, page, limit);
-                res.render('products/products', {
-                    products: response.items,
-                    totalPages: response.totalPages,
-                    currentPage: response.currentPage,
-                    totalItems: response.totalItems,
-                });
-            })
-            .catch(err => {
-                res.send(err);
-            })
+        if (user) {
+            console.log('customerid ' + user.customerid);
+
+            const userCart = await CartService.getCartByUserId(user.customerid);
+            if (!userCart) {
+                console.log('this is new user - create cart')
+                cart = await CartService.createCart(user.customerid);
+            } else {
+                console.log('this is old user - get cart')
+                cart = userCart;
+            }
+
+            const data = await productsService.listProduct(term, limit, offset);
+            const response = getPagingData(data, page, limit);
+            const cartItems = await CartService.countCartItems(cart.orderid);
+            res.render('products/products', {
+                products: response.items,
+                totalPages: response.totalPages,
+                currentPage: response.currentPage,
+                totalItems: response.totalItems,
+                cartItems
+            });
+        } else {
+            
+        }
+
+        const data = await productsService.listProduct(term, limit, offset);
+        const response = getPagingData(data, page, limit);
+        res.render('products/products', {
+            products: response.items,
+            totalPages: response.totalPages,
+            currentPage: response.currentPage,
+            totalItems: response.totalItems,
+        });
     }
 
     // // [GET] /product
@@ -57,23 +84,18 @@ class ProductController {
 
     // [POST] /products/filter/:slug
     filter = async (req, res, next) => {
-        const { page, size, color, price_start, price_end} = req.body;
+        const { page, size, color, price_start, price_end } = req.body;
         const { limit, offset } = getPagination(page, size);
 
-        await productsService.filter(color, price_start, price_end, limit, offset)
-        .then((data) => {
-            const response  = getPagingData(data, page, limit);
-            res.render('products/searchProd', { 
-                layout: false,
-                products: response.items,
-                totalPages: response.totalPages,
-                currentPage: response.currentPage,
-                totalItems: response.totalItems,
-            });
-        })
-        .catch(err => {
-            res.send(err);
-        })
+        const data = await productsService.filter(color, price_start, price_end, limit, offset);
+        const response = getPagingData(data, page, limit);
+        res.render('products/searchProd', {
+            layout: false,
+            products: response.items,
+            totalPages: response.totalPages,
+            currentPage: response.currentPage,
+            totalItems: response.totalItems,
+        });
 
         //const filterProd = productsService.filter(color, price_start, price_end, !isNaN(req.query.page) && req.query.page > 0 ? req.query.page - 1 : 0);
 
@@ -141,21 +163,24 @@ class ProductController {
     // Display a certain product by its id
     // [GET] /products/:productid
     show = async (req, res, next) => {
-        let page = +req.query.page || 1;
-        const productDetail = productsService.show(req.params.productid);
+        const productDetail = await productsService.show(req.params.productid);
+        const shoesize = await productsService.loadShoeSize(req.params.productid);
+
+        
 
         // const {brand} = productDetail;
         const relatedProd = await productsService.index(0, 8);
         // const relatedProducts = ProductService.index(0);
 
-        productDetail.then(product => {
-            res.render('products/product-detail', {
-                product,
-                relatedProd: relatedProd || null
-            })
-        }
-        ).catch(next);
+        res.render('products/product-detail', {
+            productDetail,
+            shoesize: shoesize.rows,
+            relatedProd: relatedProd || null
+        })
+
+        
     }
+
 
     // // [GET] /products
     // index = async (req, res) => {

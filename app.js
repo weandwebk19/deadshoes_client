@@ -117,7 +117,7 @@ app.use(session({
   cookie: {
     path: '/', 
     httpOnly: false,
-    maxAge: 60000
+    maxAge: 365 * 24 * 60 * 60 * 1000
   },
   secret: process.env.SESSION_SECRET
 }));

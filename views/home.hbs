@@ -61,48 +61,40 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                             <div class="mega-content">
                                 <div class="">
                                     <div class="col-3 col-md-12">
-                                        <div class="box">
-                                            <h3>Categories</h3>
-                                            <ul>
-                                                <li><a href="#">Sneaker</a></li>
-                                                <li><a href="#">Men</a></li>
-                                                <li><a href="#">Women</a></li>
-                                                <li><a href="#">Sport sneakers</a></li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                    <div class="col-3 col-md-12">
-                                        <div class="box">
-                                            <h3>Categories</h3>
-                                            <ul>
-                                                <li><a href="#">Sneaker</a></li>
-                                                <li><a href="#">Men</a></li>
-                                                <li><a href="#">Women</a></li>
-                                                <li><a href="#">Sport sneakers</a></li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                    <div class="col-3 col-md-12">
-                                        <div class="box">
-                                            <h3>Categories</h3>
-                                            <ul>
-                                                <li><a href="#">Sneaker</a></li>
-                                                <li><a href="#">Men</a></li>
-                                                <li><a href="#">Women</a></li>
-                                                <li><a href="#">Sport sneakers</a></li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                    <div class="col-3 col-md-12">
-                                        <div class="box">
-                                            <h3>Categories</h3>
-                                            <ul>
-                                                <li><a href="#">Sneaker</a></li>
-                                                <li><a href="#">Men</a></li>
-                                                <li><a href="#">Women</a></li>
-                                                <li><a href="#">Sport sneakers</a></li>
-                                            </ul>
-                                        </div>
+                                        <ul>
+                                            {{#if user}}
+                                            <li class="nav-item">
+                                                <a href="/user-information">
+                                                    My account
+                                                    {{!-- <i class="text-white navbar-btn contact-btn fas fa-phone"></i>
+                                                    --}}
+                                                </a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a href="/logout">
+                                                    Log out
+                                                    {{!-- <i class="text-white navbar-btn contact-btn fas fa-phone"></i>
+                                                    --}}
+                                                </a>
+                                            </li>
+                                            {{else}}
+                                            <li class="nav-item">
+                                                <a href="/register">
+                                                    Register
+                                                    {{!-- <i class="text-white navbar-btn contact-btn fas fa-phone"></i>
+                                                    --}}
+                                                </a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a href="/login">
+                                                    Log in
+                                                    {{!-- <i class="text-white navbar-btn contact-btn fas fa-phone"></i>
+                                                    --}}
+                                                </a>
+                                            </li>
+                                            {{/if}}
+                                            <li><a href="/products">All Products</a></li>
+                                        </ul>
                                     </div>
                                 </div>
                                 <div class="row img-row">
@@ -156,7 +148,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                             </div>
                         </li> --}}
                         <li class="nav-item">
-                            <a href="/shopping-cart">
+                            <a href="/cart">
                                 My cart
                                 {{!-- <i class="text-white navbar-btn cart-btn fas fa-shopping-cart"></i> --}}
                             </a>

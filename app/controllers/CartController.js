@@ -3,7 +3,7 @@ const CartService = require('../services/CartService');
 const ProductsService = require('../services/ProductsService');
 class CartController {
 
-    // [GET] /cart/add/:productid
+    // [POST] /cart/:productid
     add = async (req, res, next) => {
         // const { productid } = req.params;
         // CartService.add(productid).catch(err => {
@@ -47,18 +47,14 @@ class CartController {
         const { user } = req;
         let { cart } = req.session.unauthId;
         const { productid } = req.params;
+        let { size } = req.body;
 
-        //console.log(user, cart, productid);
-
-        let flagNewItem = true;
         try {
             if (user) {
                 const userCart = await CartService.getCartByUserId(user.customerid);
                 if (!userCart) {
-                    console.log('this is new user - create cart')
-                    cart = CartService.createCart(user.customerid);
+                    cart = await CartService.createCart(user.customerid);
                 } else {
-                    console.log('this is old user - get cart')
                     cart = userCart;
                 }
             }
@@ -68,24 +64,44 @@ class CartController {
 
             // const { productid, productname, price, color, status, description, image, branch } = product;
             let cartLength = await CartService.findAndCountAllCart(cart.orderid);
+            const shoesize = await ProductsService.loadShoeSize(req.params.productid);
 
-            cartLength.rows.forEach(async (order) => {
-                if (order.productid === productid) {
-                    console.log('this is old item - update cart');
-                    console.log(order);
-                    console.log('amount ' + order.amount)
-                    order.amount = order.amount + 1;
-                    CartService.increaseCart(order.orderid);
-                    //await CartService.increaseCart(order.orderid, order.amount);
-
-                    flagNewItem = false;
-                }
-            }) 
-
-            if (flagNewItem==true) {
-                console.log('this is new item - update cart');
-                CartService.addToCart(cart.orderid, product.productid, 1, product.size);
+            if (!size) {
+                size = shoesize.rows[0].size;
             }
+
+            if (cartLength.count != 0) {
+                cartLength.rows.forEach(async (order) => {
+                    if (order.productid === productid && order.size == size) {
+                        console.log('this is old item - update cart');
+                        // console.log(order);
+                        // console.log('amount ' + order.amount)
+                        // order.amount = order.amount + 1;
+                        await CartService.increaseCart(order.orderid, order.productid, size);
+                    }
+                })
+
+                let existedProduct = await CartService.findProductById(cart.orderid, productid, size);
+                console.log(existedProduct);
+
+                if (!existedProduct) {
+                    console.log('this is new item - add to cart');
+                    console.log(cart.orderid, product.productid, 1, size);
+                    await CartService.addToCart(cart.orderid, product.productid, 1, size);
+                }
+            }
+
+            if (cartLength.count == 0) {
+                let existedProduct = await CartService.findProductById(cart.orderid, productid, size);
+
+                if (!existedProduct) {
+                    console.log('this is new item - add to cart');
+                    console.log(cart.orderid, product.productid, 1, size);
+                    await CartService.addToCart(cart.orderid, product.productid, 1, size);
+                }
+            }
+
+
 
             req.session.cart = cartLength;
             res.status(200).json({
@@ -105,8 +121,34 @@ class CartController {
 
 
     // [GET] /cart
-    index(req, res) {
-        res.render('shopping-cart');
+    index = async (req, res, next) => {
+        const { user } = req;
+
+        if (user) {
+
+            const cart = await CartService.getCartByUserId(user.customerid);
+            const cartProducts = await CartService.getCartProducts(cart.orderid);
+
+            const cartProductsDetail = [];
+
+            for (let i = 0; i < cartProducts.count; i++) {
+                const product = await ProductsService.show(cartProducts.rows[i].productid);
+                cartProductsDetail.push(product);
+            }
+
+            console.log(cartProductsDetail)
+
+            console.log(cart)
+            res.render('shopping-cart', {
+                cart,
+                cartProducts,
+                cartProductsDetail,
+            });
+        } else {
+            res.render('shopping-cart', {
+                cart: req.session.cart
+            });
+        }
     }
 }
 
