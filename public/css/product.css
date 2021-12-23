@@ -123,7 +123,7 @@
     background-color: var(--red);
     color: #fff;
     font-size: 10px;
-    text-align: center
+    text-align: center;
 }
 
 .sp-item-name {
@@ -422,6 +422,77 @@ input:checked + label i {
 
 .user-rate-content {
     line-height: 25px;
+}
+
+.shoesize-box {
+    cursor: pointer;
+    background-color: var(--second-bg-color);
+    padding: 4px 16px;
+    border: none;
+    margin-bottom: 16px;
+    margin-right: 8px;
+    transition: all 0.3s;
+}
+
+.shoesize-box:hover {
+    background-color: var(--third-bg-color);
+}
+
+.shoesize-box.active {
+    background-color: var(--grey);
+    color: #fff;
+}
+
+.shoesize-stock {
+    display: none;
+    
+}
+
+.shoesize-stock.active {
+    display: block;
+    margin-top: 0;
+    font-size: 14px;
+    color:#7b7979;
+}
+
+/* .shoesize-stock.disabled {
+    display: none;
+} */
+
+input.shoesize-radio[type="radio"] {
+    display: none;
+}
+
+.flying-product {
+    position: absolute;
+    z-index: 9999;
+    top: 150px;
+    left: 0;
+    width: 50px;
+    height: 50px;
+    object-fit: cover;
+    border-radius: 100%;
+    padding: 0;
+    border: 2px solid rgb(167, 1, 1);
+    transition: all 0.5s ease-in;
+    animation: flyingAnimation 1.5s ease-out;
+}
+
+@keyframes flyingAnimation {
+    0% {
+        transform: scale(0.4);
+    }
+    25% {
+        transform: scale(1);
+    }
+    75% {
+        transform: scale(1);
+        opacity: 0.9;
+    }
+    100% {
+        transform: scale(0.4);
+        opacity: 0;
+    }
 }
 
 @media only screen and (max-width: 1280px) {

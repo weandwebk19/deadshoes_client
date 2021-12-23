@@ -15,18 +15,23 @@ module.exports = function(sequelize, DataTypes) {
       allowNull: false,
       primaryKey: true,
       references: {
-        model: 'products',
-        key: 'productid'
+        model: 'shoessize',
+        key: 'size'
+      }
+    },
+    size: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      primaryKey: true,
+      references: {
+        model: 'shoessize',
+        key: 'size'
       }
     },
     amount: {
       type: DataTypes.INTEGER,
-      allowNull: false,
+      allowNull: true,
       defaultValue: 1
-    },
-    size: {
-      type: DataTypes.INTEGER,
-      allowNull: true
     }
   }, {
     sequelize,
@@ -36,11 +41,12 @@ module.exports = function(sequelize, DataTypes) {
     paranoid: true,
     indexes: [
       {
-        name: "order_products_pkey",
+        name: "orders_products_pkey",
         unique: true,
         fields: [
           { name: "orderid" },
           { name: "productid" },
+          { name: "size" },
         ]
       },
     ]
