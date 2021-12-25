@@ -18,8 +18,6 @@ class ProductController {
         // console.log('shoesize ' + shoesize);
 
         if (user) {
-            console.log('customerid ' + user.customerid);
-
             const userCart = await CartService.getCartByUserId(user.customerid);
             if (!userCart) {
                 console.log('this is new user - create cart')
@@ -166,8 +164,6 @@ class ProductController {
         const productDetail = await productsService.show(req.params.productid);
         const shoesize = await productsService.loadShoeSize(req.params.productid);
 
-        
-
         // const {brand} = productDetail;
         const relatedProd = await productsService.index(0, 8);
         // const relatedProducts = ProductService.index(0);
@@ -177,8 +173,6 @@ class ProductController {
             shoesize: shoesize.rows,
             relatedProd: relatedProd || null
         })
-
-        
     }
 
 
