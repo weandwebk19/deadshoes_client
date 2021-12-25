@@ -1,5 +1,5 @@
 const cartRouter = require('./shopping-cart');
-const productDetailRouter = require('./product-detail');
+// const productDetailRouter = require('./product-detail');
 const productsRouter = require('./products');
 const authRouter = require('./auth');
 // const loginRouter = require('./login');
@@ -7,11 +7,13 @@ const authRouter = require('./auth');
 const contactRouter = require('./contact');
 const homeRouter = require('./home');
 const userRouter = require('./user-information');
+const checkoutRouter = require('./checkout');
 
 
 function route(app) {
+  app.use('/checkout', checkoutRouter);
   app.use('/cart', cartRouter);
-  app.use('/product-detail', productDetailRouter);
+  // app.use('/product-detail', productDetailRouter);
   app.use('/products', productsRouter);
   app.use('/user-information', userRouter);
   app.use('/', authRouter);

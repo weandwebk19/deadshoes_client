@@ -37,9 +37,9 @@ $('.fa-minus').click(function () {
 });
 
 
-
 $(".btn-cart-add").click(function (e) {
     let size = document.querySelector('input[type="radio"]:checked').value;
+    let amount = parseInt(document.querySelector('.product-quantity').textContent);
 
     e.preventDefault();
     const productid = $(this).attr("value");
@@ -49,7 +49,7 @@ $(".btn-cart-add").click(function (e) {
         url: `/cart/${productid}`,
         contentType: "application/x-www-form-urlencoded",
         datatype: "html",
-        data: { size },
+        data: { size , amount},
         success: function (response) {
             console.log(response);
             const curCount = parseInt($('.cart-count').html());
@@ -61,12 +61,12 @@ $(".btn-cart-add").click(function (e) {
     })
 });
 
-$(function(){
-        $('#cart-add-modal').on('show.bs.modal', function(){
-            let myModal = $(this);
-            clearTimeout(myModal.data('hideInterval'));
-            myModal.data('hideInterval', setTimeout(function(){
-                myModal.modal('hide');
-            }, 1500));
-        });
+$(function () {
+    $('#cart-add-modal').on('show.bs.modal', function () {
+        let myModal = $(this);
+        clearTimeout(myModal.data('hideInterval'));
+        myModal.data('hideInterval', setTimeout(function () {
+            myModal.modal('hide');
+        }, 1500));
     });
+});

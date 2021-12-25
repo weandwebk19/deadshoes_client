@@ -1,0 +1,10 @@
+.checkout-summary,
+.checkout-payment {
+    margin-bottom: 20px;
+    padding: 20px;
+    background-color: rgb(243, 238, 226);
+}
+
+.checkout-form-control {
+    width: 100%;
+}

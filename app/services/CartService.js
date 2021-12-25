@@ -58,13 +58,25 @@ exports.findAndCountAllCart = async (id) => {
     })
 }
 
-exports.increaseCart = async (orderid, productid, size) => {
+exports.increaseCart = async (orderid, productid, amount, size) => {
     return await models.order_products.increment('amount', {
         where: {
             orderid: orderid,
             productid: productid,
-            size: size
-        }
+            size: size,
+        },
+        by: amount,
+    })
+}
+
+exports.decreaseCart = async (orderid, productid, amount, size) => {
+    return await models.order_products.decrement('amount', {
+        where: {
+            orderid: orderid,
+            productid: productid,
+            size: size,
+        },
+        by: amount,
     })
 }
 
@@ -105,4 +117,23 @@ exports.index = () => {
     return models.orders.findAll({
         raw: true,
     });
+}
+
+exports.getTotalPrice = (id) => {
+
+    return models.order_products.sum('price', {
+        where: {
+            orderid: id,
+        }
+    });
+}
+
+exports.updateCart = async (orderid, price) => {
+    return await models.orders.update({
+        price: price,
+    }, {
+        where: {
+            orderid: orderid,
+        }
+    })
 }
