@@ -1,70 +1,82 @@
-let currAmount;
-let currAmountIndex = 0;
-let newQty = [];
 
-// plus 
-$('.btn-plus').click(function () {
-    currAmount = parseInt($(this).parent().parent().find('.product-quantity').data('count')) + 1;
-    $(this).parent().parent().find('.product-quantity').text(currAmount).data('count', currAmount);
-});
+$(document).ready(function () {
+    let currAmount;
+    let currAmountIndex = 0;
+    let newQty = [];
+    let currId;
+    let currSize;
+    const deleteForm = document.forms['delete-product-form'];
 
-// minus
-$('.btn-minus').click(function () {
-    currAmount = Math.max(parseInt($(this).parent().parent().find('.product-quantity').data('count')) - 1, 1);
-    $(this).parent().parent().find('.product-quantity').text(currAmount).data('count', currAmount);
-});
+    // plus 
+    $('.btn-plus').click(function () {
+        currAmount = parseInt($(this).parent().parent().find('.product-quantity').data('count')) + 1;
+        $(this).parent().parent().find('.product-quantity').text(currAmount).data('count', currAmount);
+    });
 
-$('.value-changed').click(function () {
-    console.log(parseInt($('.product-quantity').text()));
+    // minus
+    $('.btn-minus').click(function () {
+        currAmount = Math.max(parseInt($(this).parent().parent().find('.product-quantity').data('count')) - 1, 1);
+        $(this).parent().parent().find('.product-quantity').text(currAmount).data('count', currAmount);
+    });
 
-    const value = $(this).attr('value');
-    const size = $(this).attr('shoesize')
-	const productid = $(this).attr('name');
+    // delete
+    $('.remove-from-cart').click(function () {
+        currId = $(this).attr('name');
+        currSize = $(this).attr('shoesize');
+        $('#btn-delete-product').attr('name', currId).attr('shoesize', currSize);
+    });
 
-    console.log(value, productid, size);
+    // confirm delete
+    $('#btn-delete-product').click(function () {
+        deleteForm.action = '/cart/' + $(this).attr('name') + '/' + $(this).attr('shoesize') + '?_method=DELETE';
+        deleteForm.submit();
+    });
 
-	// if (parseInt(value) === 0) {
-	// 	const re = confirm('Bạn chắc chắn muốn xóa vật phẩm khỏi giỏ hàng ?');
-	// 	if (re == false) return false;
-	// 	$(this).parent().parent().addClass('d-none');
+    $('.value-changed').click(function (e) {
+        e.preventDefault();
 
-	// 	/* Check cart empty */
-	// 	$('#cart tr').not('tr[class="d-none"]').length === 0 && displayCartEmpty();
-	// }
+        /* Disabled btn 500ms when click add */
+        if ($('.value-changed').hasClass('disabled')) return;
+        $('.value-changed').addClass('disabled');
+        setTimeout(function () {
+            $('.value-changed').removeClass('disabled');
+        }, 500);
 
-    // Chân thành cảm ơn copilot <3, chúc những lập trình viên ra copilot ngày mới xinh đẹp, tuyệt vời, xứng đáng ở trong lâu đài tình ái.
-    const request = $.ajax({
-        url: `/cart/${productid}`,
-        data: JSON.stringify({
-            bias: {
-                value: parseInt(value), 
-                size: parseInt(size)
+        const value = $(this).attr('value');
+        const size = $(this).attr('shoesize')
+        const productid = $(this).attr('name');
+
+        const request = $.ajax({
+            url: `/cart/${productid}`,
+            data: JSON.stringify({
+                bias: {
+                    value: parseInt(value),
+                    size: parseInt(size)
+                },
+            }),
+            type: 'PUT',
+            contentType: 'application/json',
+            processData: false,
+            xhr: function () {
+                return window.XMLHttpRequest == null ||
+                    new window.XMLHttpRequest().addEventListener == null
+                    ? new window.ActiveXObject('Microsoft.XMLHTTP')
+                    : $.ajaxSettings.xhr();
             },
-        }),
-        type: 'PUT',
-        contentType: 'application/json',
-        processData: false,
-        xhr: function () {
-            return window.XMLHttpRequest == null ||
-                new window.XMLHttpRequest().addEventListener == null
-                ? new window.ActiveXObject('Microsoft.XMLHTTP')
-                : $.ajaxSettings.xhr();
-        },
+        });
+
+        // Req done
+        request.done(function (data, status) {
+            if (data.msg === 'success' && status === 'success') {
+                // Update view
+                data.data.cartProductsDetail.forEach((item) => {
+                    $(`#${item.product.productid}and${item.size}`).html(`$${item.total}`);
+                });
+
+                $('#totalCost').html(
+                    `$${data.data.totalPrice}`
+                )
+            }
+        });
     });
-
-    // Req done
-    request.done(async function (data, status) {
-        if (data.msg === 'success' && status === 'success') {
-            // Update view
-            await data.data.cartProductsDetail.forEach((item) => {
-				$(`#${item.product.productid}and${item.size}`).html(`$${item.total}`);
-			});
-
-            $('#totalCost').html(
-                data.data.totalPrice
-            )
-        }
-
-        // toastMessage('Cart', 'success', 'Cập nhật giỏ hàng thành công!');
-    });
-});
+}) 

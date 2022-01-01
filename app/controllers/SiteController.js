@@ -1,14 +1,10 @@
-const { response } = require('express');
-const ProductService = require('../services/ProductsService');
-const siteService = require('../services/SiteService');
-
+const ProductsService = require('../services/ProductsService');
+const SiteService = require('../services/SiteService');
 class SiteController {
-
-
     //[GET] /myaccount
     myAccount = async (req, res) => {
         console.log(req.user.customerid);
-        const customer = await siteService.user(req.user.customerid);
+        const customer = await SiteService.user(req.user.customerid);
         console.log(customer.name, customer.email);
         res.render('user-information', {customer});
     }
@@ -33,7 +29,7 @@ class SiteController {
 
     // [GET] /
     home = async (req, res) => {
-        const products = await ProductService.index();
+        const products = await ProductsService.index();
         res.render('home', {
             layout: false,
             products

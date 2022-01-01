@@ -33,6 +33,12 @@ exports.createCustomer = async (customer) => {
     return models.customers.create({name: customer.name, email: customer.email, phone: customer.phone, address: customer.address});
 }
 
+exports.createUnauthCustomer = async (customerid) => {
+    return models.customers.create({
+        customerid: customerid
+    });
+}
+
 exports.register = async (username, password, customerid) => {
     console.log(username, password, customerid);
     const Account = await models.account_customers.findOne({

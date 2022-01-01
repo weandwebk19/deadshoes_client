@@ -1,6 +1,6 @@
-const { response } = require('express');
 const CartService = require('../services/CartService');
 const ProductsService = require('../services/ProductsService');
+const AuthService = require('../services/AuthService');
 class CartController {
 
     // [POST] /cart/:productid
@@ -45,7 +45,8 @@ class CartController {
         // res.redirect('/cart');
 
         const { user } = req;
-        let { cart } = req.session.unauthId;
+        let cart;
+        let unauthId = req.session.unauthId;
         const { productid } = req.params;
         let { size, amount } = req.body;
 
@@ -58,14 +59,24 @@ class CartController {
                     cart = userCart;
                 }
             }
+            else {
+                // create user account and cart for unauthId user
+                const userCart = await CartService.getCartByUserId(unauthId);
+                if (!userCart) {
+                    await AuthService.createUnauthCustomer(unauthId);
+                    cart = await CartService.createCart(unauthId);
+                } else {
+                    cart = userCart;
+                }
+            }
             const product = await ProductsService.show(productid);
 
             if (!product) throw new Error('Can not find product!');
 
-            // const { productid, productname, price, color, status, description, image, branch } = product;
             let cartLength = await CartService.findAndCountAllCart(cart.orderid);
             const shoesize = await ProductsService.loadShoeSize(req.params.productid);
 
+            // if user add to cart directly from the products list, the default shoes size is the first index of its size.
             if (!size) {
                 size = shoesize.rows[0].size;
             }
@@ -82,15 +93,13 @@ class CartController {
                 })
 
                 let existedProduct = await CartService.findProductById(cart.orderid, productid, size);
-                console.log(existedProduct);
+                // console.log(existedProduct);
 
                 if (!existedProduct) {
                     console.log('this is new item - add to cart');
-                    console.log(cart.orderid, product.productid, amount, size);
+                    // console.log(cart.orderid, product.productid, amount, size);
                     await CartService.addToCart(cart.orderid, product.productid, amount, size);
                 }
-
-
             }
 
             if (cartLength.count == 0) {
@@ -98,11 +107,10 @@ class CartController {
 
                 if (!existedProduct) {
                     console.log('this is new item - add to cart');
-                    console.log(cart.orderid, product.productid, 1, size);
+                    // console.log(cart.orderid, product.productid, 1, size);
                     await CartService.addToCart(cart.orderid, product.productid, 1, size);
                 }
             }
-
 
             req.session.cart = cartLength;
             res.status(200).json({
@@ -125,47 +133,53 @@ class CartController {
         const { productid } = req.params;
         const { value, size } = req.body.bias;
         const { user } = req;
-        let { cart } = req.session.unauthId;
+        let unauthId = req.session.unauthId;
+        let cart;
 
         try {
             if (user) {
-                const userCart = await CartService.getCartByUserId(user.customerid);
-                if (!userCart) {
-                    cart = await CartService.createCart(user.customerid);
-                } else {
-                    cart = userCart;
-                }
+                cart = await CartService.getCartByUserId(user.customerid);
+            }
+            else {
+                cart = await CartService.getCartByUserId(unauthId);
             }
             const product = await ProductsService.show(productid);
+            let cartLength;
 
             if (!product) throw new Error('Can not find product!');
 
-            let cartLength = await CartService.findAndCountAllCart(cart.orderid);
+            cartLength = await CartService.findAndCountAllCart(cart.orderid);
 
             if (cartLength.count != 0) {
                 cartLength.rows.forEach(async (order) => {
-                    if (order.productid === productid && order.size == size && value === 1) {
-                        console.log('plus item');
-                        await CartService.increaseCart(order.orderid, order.productid, 1, size);
-                    }
-                    else if (order.productid === productid && order.size == size && value === -1 && order.amount > 1) {
-                        console.log('minus item');
-                        await CartService.decreaseCart(order.orderid, order.productid, 1, size);
+                    if (order.productid === productid && order.size == size) {
+                        if (value === 1) {
+                            console.log('plus item');
+                            await CartService.increaseCart(order.orderid, order.productid, 1, size);
+                        }
+                        else if (value === -1 && order.amount > 1) {
+                            console.log('minus item');
+                            await CartService.decreaseCart(order.orderid, order.productid, 1, size);
+                        }
                     }
                 })
             }
 
-            const cartProducts = await CartService.getCartProducts(cart.orderid);
+            cartLength = await CartService.findAndCountAllCart(cart.orderid);
+
+            // console.log(cartLength);
             let totalPrice = 0;
 
             const cartProductsDetail = [];
 
-            for (let i = 0; i < cartProducts.count; i++) {
-                const product = await ProductsService.show(cartProducts.rows[i].productid);
-                let currTotalPrice = Math.round((product.price * cartProducts.rows[i].amount) * 100) / 100;
+            for (let i = 0; i < cartLength.count; i++) {
+                const product = await ProductsService.show(cartLength.rows[i].productid);
+                let currTotalPrice = await Math.round((product.price * cartLength.rows[i].amount) * 100) / 100;
                 totalPrice += currTotalPrice;
-                cartProductsDetail.push({ product, size: cartProducts.rows[i].size, amount: cartProducts.rows[i].amount, total: currTotalPrice });
+                await cartProductsDetail.push({ product, size: cartLength.rows[i].size, amount: cartLength.rows[i].amount, total: currTotalPrice });
             }
+
+            // console.log(cartProductsDetail);
 
             totalPrice = Math.round(totalPrice * 100) / 100;
             await CartService.updateCart(cart.orderid, totalPrice);
@@ -187,37 +201,81 @@ class CartController {
         }
     }
 
+    // [DELETE] /cart/:product/:size
+    destroy = async (req, res, next) => {
+        const { productid, size } = req.params;
+        const { user } = req;
+        const unauthId = req.session.unauthId;
+        let cart;
+
+        if (user) {
+            cart = await CartService.getCartByUserId(user.customerid);
+        }
+        else {
+            cart = await CartService.getCartByUserId(unauthId);
+        }
+        const product = await ProductsService.show(productid);
+        let cartLength = await CartService.findAndCountAllCart(cart.orderid);;
+
+        if (!product) throw new Error('Can not find product!');
+
+        if (cartLength.count != 0) {
+            cartLength.rows.forEach(async (order) => {
+                if (order.productid === productid && order.size == size) {
+                    await CartService.deleteCart(cart.orderid, productid, size);
+                }
+            })
+        }
+
+        res.redirect('back');
+    }
+
+
     // [GET] /cart
     index = async (req, res, next) => {
         const { user } = req;
+        const unauthId = req.session.unauthId;
+        let cart;
 
         if (user) {
-            const cart = await CartService.getCartByUserId(user.customerid);
-            const cartProducts = await CartService.getCartProducts(cart.orderid);
-            let totalPrice = 0;
-
-            const cartProductsDetail = [];
-
-            for (let i = 0; i < cartProducts.count; i++) {
-                const product = await ProductsService.show(cartProducts.rows[i].productid);
-                cartProductsDetail.push({ product, size: cartProducts.rows[i].size, amount: cartProducts.rows[i].amount });
-                totalPrice += (product.price * cartProducts.rows[i].amount);
+            const userCart = await CartService.getCartByUserId(user.customerid);
+            if (!userCart) {
+                cart = await CartService.createCart(user.customerid);
+            } else {
+                cart = userCart;
             }
-            totalPrice = Math.round(totalPrice * 100) / 100;
-            await CartService.updateCart(cart.orderid, totalPrice);
-
-
-            res.render('shopping-cart', {
-                cart,
-                cartProducts,
-                cartProductsDetail,
-                totalPrice,
-            });
-        } else {
-            res.render('shopping-cart', {
-                cart: req.session.cart
-            });
         }
+        else {
+            // create user account and cart for unauthId user
+            const userCart = await CartService.getCartByUserId(unauthId);
+            if (!userCart) {
+                await AuthService.createUnauthCustomer(unauthId);
+                cart = await CartService.createCart(unauthId);
+            } else {
+                cart = userCart;
+            }
+        }
+        
+        const cartLength = await CartService.findAndCountAllCart(cart.orderid);
+        let totalPrice = 0;
+
+        const cartProductsDetail = [];
+
+        for (let i = 0; i < cartLength.count; i++) {
+            const product = await ProductsService.show(cartLength.rows[i].productid);
+            cartProductsDetail.push({ product, size: cartLength.rows[i].size, amount: cartLength.rows[i].amount });
+            totalPrice += (product.price * cartLength.rows[i].amount);
+        }
+        totalPrice = Math.round(totalPrice * 100) / 100;
+        await CartService.updateCart(cart.orderid, totalPrice);
+
+
+        res.render('shopping-cart', {
+            cart,
+            cartLength,
+            cartProductsDetail,
+            totalPrice,
+        });
     }
 }
 

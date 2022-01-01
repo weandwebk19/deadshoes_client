@@ -62,3 +62,7 @@ h2 {
     text-decoration: underline;
     color: #fff !important;
 }
+
+.disabled {
+    cursor: not-allowed !important;
+}
