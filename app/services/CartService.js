@@ -10,16 +10,6 @@ exports.getCartByUserId = async (id) => {
     return cart;
 }
 
-exports.getCartProducts = async (id) => {
-    const cart = await models.order_products.findAndCountAll({
-        where: {
-            orderid: id,
-        },
-        raw: true,
-    });
-    return cart;
-}
-
 exports.findProductById = async (orderid, productid, size) => {
     const flagNewItem = await models.order_products.findOne({
         where: {
@@ -77,6 +67,17 @@ exports.decreaseCart = async (orderid, productid, amount, size) => {
             size: size,
         },
         by: amount,
+    })
+}
+
+exports.deleteCart = async (orderid, productid, size) => {
+    return await models.order_products.destroy({
+        where: {
+            orderid: orderid,
+            productid: productid,
+            size: size,
+        },
+        force: true,
     })
 }
 

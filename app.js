@@ -7,6 +7,7 @@ const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const logger = require('morgan');
 const route = require('./app/routes');
+const methodOverride = require('method-override');
 const paginate = require('handlebars-paginate');
 const exphbs = require('express-handlebars');
 const helpers = require('handlebars-helpers');
@@ -109,6 +110,7 @@ app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(methodOverride('_method'));
 
 app.set('view engine', 'hbs');
 app.set('views', path.join(__dirname, 'views'));

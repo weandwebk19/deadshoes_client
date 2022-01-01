@@ -25,8 +25,8 @@
                     <tr>
                         <td>
                             <div class="product-item">
-                                <a class="product-thumb" href="/products/{{this.product.productid}}"><img src="{{this.product.image.[0]}}"
-                                        alt="Product"></a>
+                                <a class="product-thumb" href="/products/{{this.product.productid}}"><img
+                                        src="{{this.product.image.[0]}}" alt="Product"></a>
                                 <div class="product-info">
                                     <h4 class="product-title"><a href="#">{{this.product.productname}}</a></h4>
                                     <span><em>Size: </em> {{this.size}}</span>
@@ -50,10 +50,12 @@
                             </div>
                         </td>
                         <td class="text-center text-lg text-medium">${{this.product.price}}</td>
-                        <td class="text-center text-lg text-medium totalItemCost" id="{{this.product.productid}}and{{this.size}}">${{mul this.amount this.product.price}}</td>
-                        <td class="text-center"><a class="remove-from-cart value-changed"
-                                name="{{this.product.productid}}" shoesize="{{this.size}}" value="0" href="#" data-toggle="tooltip" title=""
-                                data-original-title="Remove item"><i class="fa fa-trash"></i></a></td>
+                        <td class="text-center text-lg text-medium totalItemCost"
+                            id="{{this.product.productid}}and{{this.size}}">${{mul this.amount this.product.price}}</td>
+                        <td class="text-center"><a class="remove-from-cart" name="{{this.product.productid}}"
+                                shoesize="{{this.size}}" href="" data-bs-toggle="modal"
+                                data-bs-target="#delete-product-modal"><i class="fa fa-trash"></i></a>
+                        </td>
                     </tr>
                     {{/each}}
                 </tbody>
@@ -76,7 +78,26 @@
                     data-toast-message="is updated successfully!">Update Cart</a><a class="btn btn-success"
                     href="/checkout">Checkout</a></div>
         </div>
+
+        <form name="delete-product-form" method="POST"></form>
+
+        <div id="delete-product-modal" class="modal fade">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Remove product</h5>
+                    </div>
+                    <div class="modal-body">
+                        <p>Remove this from your cart?</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-danger value-changed" id="btn-delete-product" value="0"
+                            data-bs-dismiss="modal">Remove</button>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-</div>
-<script src="/js/jquery-3.6.0.min.js"></script>
-<script src="/js/cart.js"></script>
+    <script src="/js/jquery-3.6.0.min.js"></script>
+    <script src="/js/cart.js"></script>

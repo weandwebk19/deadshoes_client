@@ -1,10 +1,5 @@
-const { response } = require('express');
-const passport = require('../middleware/auth/passport');
-
 const authService = require('../services/AuthService');
-
 class AuthController {
-
     register = async (req, res) => {
         const { username, password } = req.body;
         try {
