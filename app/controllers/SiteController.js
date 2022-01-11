@@ -1,12 +1,12 @@
 const ProductsService = require('../services/ProductsService');
 const SiteService = require('../services/SiteService');
+const CartService = require('../services/CartService');
+const AuthService = require('../services/AuthService');
 class SiteController {
     //[GET] /myaccount
     myAccount = async (req, res) => {
-        console.log(req.user.customerid);
         const customer = await SiteService.user(req.user.customerid);
-        console.log(customer.name, customer.email);
-        res.render('user-information', {customer});
+        res.render('user-information', { customer });
     }
 
     // [GET] /login
@@ -25,6 +25,50 @@ class SiteController {
     // [GET] /contact
     contact = async (req, res) => {
         res.render('contact');
+    }
+
+    // [GET] /history
+    history = async (req, res) => {
+        const { user } = req;
+        const unauthId = req.session.unauthId;
+        let cart;
+
+        console.log(user.customerid)
+        if (user) {
+            cart = await CartService.getPurchaseCartByUserId(user.customerid);
+        }
+        else {
+            // create user account and cart for unauthId user
+            cart = await CartService.getPurchaseCartByUserId(unauthId);
+        }
+        console.log("-------------------------------------------")
+        console.log(cart);
+
+        let orderids;
+        const cartProductsDetail = [];
+
+        const orderidSet = new Set();
+        for (let i = 0; i < cart.count; i++) {
+            orderidSet.add(cart.rows[i].orderid);
+        }
+        orderids = Array.from(orderidSet);
+        console.log(orderids);
+
+        for (let i = 0; i < orderids.length; i++) {
+            const cartLength = await CartService.findAndCountAllPurchased(orderids[i]);
+            console.log(cartLength);
+
+            for (let i = 0; i < cartLength.count; i++) {
+                const product = await ProductsService.show(cartLength.rows[i].productid);
+                cartProductsDetail.push({ product, size: cartLength.rows[i].size, amount: cartLength.rows[i].amount });
+            }
+        }
+
+        console.log(cartProductsDetail);
+        res.render('purchase-history', {
+            cart,
+            cartProductsDetail,
+        });
     }
 
     // [GET] /

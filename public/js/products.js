@@ -18,21 +18,6 @@ document.querySelector('#filter-close').addEventListener('click', () => filter_c
 $(".btn-cart-add").click(function (e) {
     e.preventDefault();
     const productid = $(this).attr("value");
-    // $.ajax({
-    //     async: false,
-    //     type: "POST",
-    //     url: `/cart/${productid}`,
-    //     contentType: "application/x-www-form-urlencoded",
-    //     datatype: "html",
-    //     data: {size: size},
-    //     success: function (response) {
-    //         console.log(response);
-    //         $('.cart-count').html(`(${curCount + 1})`);
-    //     },
-    //     error: function (response) {
-    //         console.log(response);
-    //     }
-    // })
 
     $.post(`/cart/${productid}/`, {}, function (data, status) {
         if (data.msg === "success") {

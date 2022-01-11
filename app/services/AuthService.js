@@ -29,6 +29,16 @@ exports.getAccountById = async (id) => {
     return Account
 }
 
+exports.getCustomerById = async (id) => {
+    const customer = await models.customers.findOne({
+        where: {
+            customerid: id,
+        },
+        raw: true
+    })
+    return customer
+}
+
 exports.createCustomer = async (customer) => {
     return models.customers.create({name: customer.name, email: customer.email, phone: customer.phone, address: customer.address});
 }
@@ -52,8 +62,6 @@ exports.register = async (username, password, customerid) => {
         throw new Error('Username already exists');
     }
 
-    // const newCustomer = await models.customers.create ({name: acc.name, email: acc.email, phone: acc.phone, address: acc.address})
-    // console.log(newCustomer.customerid);
     const hashPassword = await bcrypt.hash(password, 10);
     return await models.account_customers.create({ username: username, password: hashPassword, customerid: customerid });
     // .then(() => {

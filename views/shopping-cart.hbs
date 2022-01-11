@@ -16,8 +16,7 @@
                         <th class="text-center">Quantity</th>
                         <th class="text-center">Subtotal</th>
                         <th class="text-center">Total</th>
-                        <th class="text-center"><a class="btn btn-sm btn-outline-danger" href="#">Clear Cart</a>
-                        </th>
+                        <th class="text-center text-danger">Clear Cart</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -68,15 +67,15 @@
                     <button class="btn btn-outline-primary btn-sm" type="submit">Apply Coupon</button>
                 </form>
             </div>
-            <div class="column text-lg">Subtotal: <span class="text-medium" id="totalCost">${{totalPrice}}</span></div>
+            <div class="column text-lg">Subtotal: <span class="text-medium green" id="totalCost">${{totalPrice}}</span>
+            </div>
         </div>
         <div class="shopping-cart-footer">
             <div class="column"><a class="btn btn-outline-secondary" href="/products"><i
                         class="icon-arrow-left"></i>&nbsp;Back to Shopping</a></div>
-            <div class="column"><a class="btn btn-primary" href="#" data-toast="" data-toast-type="success"
-                    data-toast-position="topRight" data-toast-icon="icon-circle-check" data-toast-title="Your cart"
-                    data-toast-message="is updated successfully!">Update Cart</a><a class="btn btn-success"
-                    href="/checkout">Checkout</a></div>
+            {{#if totalPrice}}
+            <div class="column"><a class="btn btn-success" href="/checkout">Checkout</a></div>
+            {{/if}}
         </div>
 
         <form name="delete-product-form" method="POST"></form>
@@ -99,5 +98,6 @@
             </div>
         </div>
     </div>
-    <script src="/js/jquery-3.6.0.min.js"></script>
-    <script src="/js/cart.js"></script>
+</div>
+<script src="/js/jquery-3.6.0.min.js"></script>
+<script src="/js/cart.js"></script>
