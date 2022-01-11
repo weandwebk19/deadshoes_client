@@ -12,8 +12,6 @@ class ProductController {
         const { user } = req;
         let cart;
         let unauthId = req.session.unauthId;
-        const { productid } = req.params;
-        let shoesize = req.body.size;
 
         if (user) {
             const userCart = await CartService.getCartByUserId(user.customerid);
@@ -35,45 +33,17 @@ class ProductController {
         }
 
         const data = await ProductsService.listProduct(term, limit, offset);
-            const response = getPagingData(data, page, limit);
-            const cartItems = await CartService.countCartItems(cart.orderid);
-            res.render('products/products', {
-                products: response.items,
-                totalPages: response.totalPages,
-                currentPage: response.currentPage,
-                totalItems: response.totalItems,
-                cartItems
+        const response = getPagingData(data, page, limit);
+        let cartItems = await CartService.countCartItems(cart.orderid);
+
+        res.render('products/products', {
+            products: response.items,
+            totalPages: response.totalPages,
+            currentPage: response.currentPage,
+            totalItems: response.totalItems,
+            cartItems
         });
     }
-
-    // // [GET] /product
-    // pagi = async (req, res) => {
-    //     let { term, color, price_start, price_end, page } = req.query;
-    //     if (page) {
-    //         page = parseInt(page);
-    //         if (page < 1) {
-    //             page = 1;
-    //         }
-    //         let skipAmount = (page - 1) * 9;
-    //         console.log("1----")
-    //         await ProductsService.pagin(term, color, price_start, price_end, 9, skipAmount)
-    //             .then((data) => {
-    //                 res.json(data);
-    //             })
-    //             .catch(err => {
-    //                 res.send(err);
-    //             })
-    //     } else {
-    //         console.log("2----")
-    //         await models.products.findAll()
-    //             .then((data) => {
-    //                 res.json(data);
-    //             })
-    //             .catch(err => {
-    //                 res.send(err);
-    //             })
-    //     }
-    // }
 
     // [POST] /products/filter/:slug
     filter = async (req, res, next) => {

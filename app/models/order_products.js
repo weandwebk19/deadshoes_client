@@ -15,23 +15,24 @@ module.exports = function(sequelize, DataTypes) {
       allowNull: false,
       primaryKey: true,
       references: {
-        model: 'shoessize',
-        key: 'size'
+        model: 'products',
+        key: 'productid'
       }
     },
     size: {
       type: DataTypes.INTEGER,
       allowNull: false,
-      primaryKey: true,
-      references: {
-        model: 'shoessize',
-        key: 'size'
-      }
+      primaryKey: true
     },
     amount: {
       type: DataTypes.INTEGER,
       allowNull: true,
       defaultValue: 1
+    },
+    ispurchase: {
+      type: DataTypes.BOOLEAN,
+      allowNull: true,
+      defaultValue: false
     }
   }, {
     sequelize,

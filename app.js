@@ -10,8 +10,6 @@ const route = require('./app/routes');
 const methodOverride = require('method-override');
 const paginate = require('handlebars-paginate');
 const exphbs = require('express-handlebars');
-const helpers = require('handlebars-helpers');
-const multiplehelpers = helpers();
 const session = require('express-session');
 const passport = require('./app/middleware/auth/passport');
 const bcrypt = require('bcrypt');
@@ -33,7 +31,6 @@ app.engine('.hbs', exphbs({
   },
   helpers:
   {
-    multiplehelpers,
     paginate: paginate,
     'limit': (arr, limit) => {
       if (arr.length > limit) {
