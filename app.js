@@ -12,7 +12,6 @@ const paginate = require('handlebars-paginate');
 const exphbs = require('express-handlebars');
 const session = require('express-session');
 const passport = require('./app/middleware/auth/passport');
-const bcrypt = require('bcrypt');
 const sessionHandler = require('./app/middleware/auth/sessionHandler');
 const mylogger = require('./app/middleware/auth/logger');
 

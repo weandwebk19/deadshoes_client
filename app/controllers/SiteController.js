@@ -2,7 +2,44 @@ const ProductsService = require('../services/ProductsService');
 const SiteService = require('../services/SiteService');
 const CartService = require('../services/CartService');
 const AuthService = require('../services/AuthService');
+const dotenv = require('dotenv');
+dotenv.config({ path: '.env' });
 class SiteController {
+    // [GET] /reset/:id/:token
+    reset = async (req, res) => {
+        const { id, token } = req.params;
+        console.log(id)
+        const existedUser = await AuthService.getAccountByCustomerId(id);
+        if (!existedUser) {
+            res.render('reset-password', {
+                layout: false,
+                existedUser,
+                message: 'User is not existed'
+            });
+        }
+
+        const secret = process.env.JWT_SECRET + existedUser.password;
+        try {
+            const payload = jwt.verify(token, secret);
+            res.render('reset_password', {
+                layout: false,
+                username: existedUser.username,
+            });
+        } catch (error) {
+            res.render('reset-password', {
+                layout: false,
+                existedUser,
+                message: 'Token is invalid'
+            });
+        }
+    }
+
+
+    // [GET] /forgot-password
+    forgot = async (req, res) => {
+        res.render('forgot-password', { layout: false });
+    }
+
     //[GET] /myaccount
     myAccount = async (req, res) => {
         const customer = await SiteService.user(req.user.customerid);
@@ -41,8 +78,6 @@ class SiteController {
             // create user account and cart for unauthId user
             cart = await CartService.getPurchaseCartByUserId(unauthId);
         }
-        console.log("-------------------------------------------")
-        console.log(cart);
 
         let orderids;
         const cartProductsDetail = [];
@@ -52,11 +87,9 @@ class SiteController {
             orderidSet.add(cart.rows[i].orderid);
         }
         orderids = Array.from(orderidSet);
-        console.log(orderids);
 
         for (let i = 0; i < orderids.length; i++) {
             const cartLength = await CartService.findAndCountAllPurchased(orderids[i]);
-            console.log(cartLength);
 
             for (let i = 0; i < cartLength.count; i++) {
                 const product = await ProductsService.show(cartLength.rows[i].productid);
@@ -64,7 +97,6 @@ class SiteController {
             }
         }
 
-        console.log(cartProductsDetail);
         res.render('purchase-history', {
             cart,
             cartProductsDetail,

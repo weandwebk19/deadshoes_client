@@ -11,12 +11,6 @@ exports.getAccountByUsername = async (username) => {
         raw: true
     });
     return Account;
-    // return models.account_customers.findOne({
-    //     where: {
-    //         username: username,
-    //     },
-    //     raw: true
-    // })
 }
 
 exports.getAccountById = async (id) => {
@@ -26,7 +20,17 @@ exports.getAccountById = async (id) => {
         },
         raw: true
     })
-    return Account
+    return Account;
+}
+
+exports.getAccountByCustomerId = async (customerid) => {
+    const Account = await models.account_customers.findOne({
+        where: {
+            customerid: customerid,
+        },
+        raw: true
+    })
+    return Account;
 }
 
 exports.getCustomerById = async (id) => {
@@ -36,7 +40,7 @@ exports.getCustomerById = async (id) => {
         },
         raw: true
     })
-    return customer
+    return customer;
 }
 
 exports.createCustomer = async (customer) => {
@@ -72,4 +76,10 @@ exports.register = async (username, password, customerid) => {
     //     console.log(err);
     //     throw new Error(err);
     // });
+}
+
+exports.updatePassword = async (accountid, password) => {
+    return await models.account_customers.update({ password: password }, { 
+        where: { accountid: accountid } 
+    });
 }
