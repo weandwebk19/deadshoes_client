@@ -1,12 +1,15 @@
 const express = require('express');
 const passport = require('../middleware/auth/passport');
 const router = express.Router();
-// const bodyParser = require('body-parser');
-// const urlencodedParser = bodyParser.urlencoded({ extended: false });
 
 const siteController = require('../controllers/SiteController');
 const authController = require('../controllers/AuthController');
 
+router.post('/reset-password/:id/:token', authController.reset);
+router.get('/reset-password/:id/:token', siteController.reset);
+
+router.post('/forgot-password', authController.forgot);
+router.get('/forgot-password', siteController.forgot);
 
 router.get('/login', siteController.login);
 
@@ -27,7 +30,6 @@ router.post('/login',
 router.get('/register', siteController.register);
 
 router.post('/register', authController.register);
-
 
 router.get('/logout', function (req, res) {
     req.logout();
