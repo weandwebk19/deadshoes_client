@@ -53,17 +53,7 @@ exports.filter = async (color, price_start, price_end, limit, offset) => {
     return result;
 }
 
-// exports.filter = (color, price_start, price_end, page = 0, itemPerPage = 9) => {
-//     return models.products.findAndCountAll({
-//         where: {
-//             color: { [Op.iLike]: `%${color}%` },
-//             price: { [Op.between]: [price_start, price_end] }
-//         },
-//         offset: page * itemPerPage,
-//         limit: itemPerPage,
-//         raw: true
-//     });
-// }
+
 
 exports.loadShoeSize = async(id) => {
     return await models.shoessize.findAndCountAll({
@@ -101,3 +91,16 @@ exports.index = (page = 0, itemPerPage = 9) => {
         raw: true,
     });
 };
+
+exports.createFeedback = async (data) => {
+    return models.comments.create({name: data.username, content: data.feedback, productid: data.productid, account_id: data.accountid});
+}
+
+exports.loadFeedbacks = async(id) => {
+    return await models.comments.findAndCountAll({
+        where: {
+            productid: id
+        },
+        raw: true
+    });
+}

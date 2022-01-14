@@ -12,7 +12,12 @@ router.post('/filter', productController.filter);
 
 router.get('/:productid', productController.show);
 
+router.post('/feedback', productController.feedback);
+
+// router.post('/:productid', productController.feedback);
+
 // router.get('/', productController.index);
 router.get('/', productController.list);
+
 
 module.exports = router;
