@@ -82,6 +82,18 @@ class ProductController {
         //     .catch(next);
     }
 
+    feedback = async (req, res, next) => {
+        const { feedback, accountid, productid, username } = req.body;
+        try {
+            const data = await ProductsService.createFeedback(req.body);
+        } catch (err) {console.log(err);}
+        res.render('products/feedback', {
+            layout: false,
+            feedback,
+            username
+        });
+    }
+
     // // [GET] /products/search
     // search(req, res, next) {
     //     let page = +req.query.page || 1;
@@ -133,7 +145,7 @@ class ProductController {
     show = async (req, res, next) => {
         const productDetail = await ProductsService.show(req.params.productid);
         const shoesize = await ProductsService.loadShoeSize(req.params.productid);
-
+        const feedbacks = await ProductsService.loadFeedbacks(req.params.productid);
         // const {brand} = productDetail;
         const relatedProd = await ProductsService.index(0, 8);
         // const relatedProducts = ProductService.index(0);
@@ -141,6 +153,7 @@ class ProductController {
         res.render('products/product-detail', {
             productDetail,
             shoesize: shoesize.rows,
+            feedbacks: feedbacks.rows,
             relatedProd: relatedProd || null
         })
     }

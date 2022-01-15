@@ -140,84 +140,39 @@
                 review
             </div>
 
-            <div>
-                <div class="user-rate">
-                    <div class="user-info">
-                        <div class="user-avt">
-                            <img src="/images/t1.jpg" alt="">
-                        </div>
-                        <div class="user-name">
-                            <span class="name">User name</span>
-                            <span class="rating">
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                            </span>
-                        </div>
-                    </div>
-                    <div class="user-rate-content">
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Distinctio ea iste, veritatis nobis
-                        amet illum, cum alias magni dolores odio, eius quo excepturi veniam ipsa voluptatibus natus
-                        voluptas vero? Aspernatur!
-                    </div>
-                </div>
-                <div class="user-rate">
-                    <div class="user-info">
-                        <div class="user-avt">
-                            <img src="/images/t2.jpg" alt="">
-                        </div>
-                        <div class="user-name">
-                            <span class="name">User name</span>
-                            <span class="rating">
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                            </span>
-                        </div>
-                    </div>
-                    <div class="user-rate-content">
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Distinctio ea iste, veritatis nobis
-                        amet illum, cum alias magni dolores odio, eius quo excepturi veniam ipsa voluptatibus natus
-                        voluptas vero? Aspernatur!
-                    </div>
-                </div>
+            <div id="feedback-list">
+                {{#each feedbacks}}
                 <div class="user-rate">
                     <div class="user-info">
                         <div class="user-avt">
                             <img src="/images/t3.jpg" alt="">
                         </div>
                         <div class="user-name">
-                            <span class="name">User name</span>
-                            <span class="rating">
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                            </span>
+                            <span class="name">{{this.name}}</span>
                         </div>
                     </div>
                     <div class="user-rate-content">
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Distinctio ea iste, veritatis nobis
-                        amet illum, cum alias magni dolores odio, eius quo excepturi veniam ipsa voluptatibus natus
-                        voluptas vero? Aspernatur!
+                    {{this.content}}
                     </div>
                 </div>
-                {{#if user}}
-                <div class="mt-5 form-floating">
-                    <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea"></textarea>
-                    <label for="floatingTextarea">Comments</label>
-                </div>
-                {{else}}
-                <div class="mt-5 text-info">
-                    <a href="/login">Login</a> to leave a comment.
-                    {{/if}}
-                </div>
+                {{/each}}
             </div>
+
+            {{#if user}}
+            <div class="mt-5 form-floating">
+                <p class="accountid-hidden" style="display: none">{{user.accountid}}</p>
+                <p class="productid-hidden" style="display: none">{{productDetail.productid}}</p>
+                <p class="name-hidden" style="display: none">{{user.username}}</p>
+                 <textarea class="form-control" placeholder="Leave a comment here" name="feedback" id="feedback-value"></textarea>
+                 <label for="feedback-value">Comments</label>
+                {{!-- <input type="text" name="feedback" id="feedback-value"> --}}
+                <button type="submit" class="btn btn-secondary mt-2 float-end" id="button-feedback">GỬI</button>
+            </div>
+            {{else}}
+            <div class="mt-5 text-info">
+                <a href="/login">Login</a> to leave a comment.
+            </div>
+            {{/if}}
             <div class="box">
                 <div class="box-header">
                     related products
@@ -260,3 +215,26 @@
     <!-- end product-detail content -->
     <script src="/js/jquery-3.6.0.min.js"></script>
     <script src="/js/product-detail.js"></script>
+    <script>
+        $(document).on("click", "#button-feedback", function () {
+            const feedback = document.querySelector('#feedback-value').value;
+            const accountid = document.querySelector('.accountid-hidden').innerText;
+            const productid = document.querySelector('.productid-hidden').innerText;
+            const username = document.querySelector('.name-hidden').innerText;
+            $.ajax({
+                async: false,
+                type: "POST",
+                url: "../products/feedback" ,
+                contentType: "application/x-www-form-urlencoded",
+                datatype: "html",
+                data: { feedback, accountid, productid, username},
+                success: function (response) {
+                    $('#feedback-list').append(response);
+                },
+                error: function (response) {
+                    console.log(response);
+                }
+            });
+        });
+
+    </script>
