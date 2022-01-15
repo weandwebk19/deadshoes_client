@@ -67,7 +67,8 @@ select.form-control {
 
 .shopping-cart .remove-from-cart,
 .wishlist-table .remove-from-cart,
-.order-table .remove-from-cart {
+.order-table .remove-from-cart,
+.remove-from-wishlist {
     display: inline-block;
     color: #ff5252;
     font-size: 18px;

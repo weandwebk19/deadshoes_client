@@ -1,4 +1,4 @@
-const { uuid } = require('uuidv4');
+const { v4:uuid } = require('uuid');
 
 module.exports = function (req, res, next) {
     if (!req.session.unauthId) {
