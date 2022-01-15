@@ -22,13 +22,18 @@ class ProductController {
             }
         }
         else {
-            // create user account and cart for unauthId user
-            const userCart = await CartService.getCartByUserId(unauthId);
-            if (!userCart) {
+            const existedUnauthUser = await AuthService.getCustomerById(unauthId);
+            if (existedUnauthUser) {
+                // create user account and cart for unauthId user
+                const userCart = await CartService.getCartByUserId(unauthId);
+                if (!userCart) {
+                    cart = await CartService.createCart(unauthId);
+                } else {
+                    cart = userCart;
+                }
+            } else {
                 await AuthService.createUnauthCustomer(unauthId);
                 cart = await CartService.createCart(unauthId);
-            } else {
-                cart = userCart;
             }
         }
 

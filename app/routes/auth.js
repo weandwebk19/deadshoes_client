@@ -11,6 +11,12 @@ router.get('/reset-password/:id/:token', siteController.reset);
 router.post('/forgot-password', authController.forgot);
 router.get('/forgot-password', siteController.forgot);
 
+router.post('/change-password', authController.change);
+router.get('/change-password', siteController.change);
+
+router.post('/password-confirmation', authController.confirm);
+router.get('/password-confirmation', siteController.confirm);
+
 router.get('/login', siteController.login);
 
 router.post('/login',
@@ -27,9 +33,8 @@ router.post('/login',
     },
 );
 
-router.get('/register', siteController.register);
-
 router.post('/register', authController.register);
+router.get('/register', siteController.register);
 
 router.get('/logout', function (req, res) {
     req.logout();

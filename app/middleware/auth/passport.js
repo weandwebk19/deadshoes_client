@@ -38,7 +38,6 @@ passport.serializeUser(function (user, done) {
 passport.deserializeUser(function (id, done) {
     const Account = AuthService.getAccountById(id);
     Account.then(function (user) {
-        // console.log('deserializing user:', user);
         done(null, user);
     }).catch(function (err) {
         if (err) {
@@ -48,8 +47,6 @@ passport.deserializeUser(function (id, done) {
 });
 
 async function validPassword(user, password) {
-    console.log(password, user.password);
-    // return (password === user.password)
     return bcrypt.compare(password, user.password);
 }
 

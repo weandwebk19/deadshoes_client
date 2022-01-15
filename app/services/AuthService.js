@@ -83,3 +83,9 @@ exports.updatePassword = async (accountid, password) => {
         where: { accountid: accountid } 
     });
 }
+
+exports.updateAccount = async (customerid, name, email, address, phone) => {
+    return await models.customers.update({ name, email, address, phone }, {
+        where: { customerid: customerid }
+    });
+}
