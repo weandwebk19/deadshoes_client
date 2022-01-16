@@ -164,70 +164,7 @@
                             </li>
                         </ul>
                     </div>
-                    <button id="filter-products" type="button" class="btn btn-secondary ms-4">Lọc sản phẩm</button>
-                    {{!-- <div class="box">
-                        <span class="filter-header">
-                            customer review
-                        </span>
-                        <ul class="filter-list">
-                            <div class="filter-item">
-                                <input type="radio" id="star-five" name="rating" class="rating" value="five-star"
-                                    checked>
-                                <label for="star-five"><span class="rating">
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                    </span>
-                                </label>
-                            </div>
-                            <div class="filter-item">
-                                <input type="radio" id="star-four" name="rating" class="rating" value="four-star">
-                                <label for="star-four"><span class="rating">
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="far fa-star"></i>
-                                    </span>
-                                </label>
-                            </div>
-                            <div class="filter-item">
-                                <input type="radio" id="star-three" name="rating" class="rating" value="three-star">
-                                <label for="star-three"><span class="rating">
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="far fa-star"></i>
-                                        <i class="far fa-star"></i>
-                                    </span>
-                                </label>
-                            </div>
-                            <div class="filter-item">
-                                <input type="radio" id="star-two" name="rating" class="rating" value="two-star">
-                                <label for="star-two"><span class="rating">
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="far fa-star"></i>
-                                        <i class="far fa-star"></i>
-                                        <i class="far fa-star"></i>
-                                    </span>
-                                </label>
-                            </div>
-                            <div class="filter-item">
-                                <input type="radio" id="star-one" name="rating" class="rating" value="one-star">
-                                <label for="star-one"><span class="rating">
-                                        <i class="fas fa-star"></i>
-                                        <i class="far fa-star"></i>
-                                        <i class="far fa-star"></i>
-                                        <i class="far fa-star"></i>
-                                        <i class="far fa-star"></i>
-                                    </span>
-                                </label>
-                            </div>
-                        </ul>
-                    </div> --}}
+                    <button id="filter-products" type="button" class="btn btn-secondary ms-4">Filter</button>
                 </div>
                 <div class="col-xl-9 col-lg-12" id="products-content">
                     <div class="box filter-toggle-box">
@@ -250,11 +187,17 @@
                                             <button class="btn-flat btn-hover btn-cart-add" value="{{productid}}">
                                                 <i class="fas fa-shopping-cart"></i>
                                             </button>
+                                            {{#if user}}
                                             <button class="btn-flat btn-hover btn-wishlist-add" value="{{productid}}">
                                                 {{!-- <i class="fas fa-heart"></i> --}}
                                                 {{!-- <i class="far fa-heart"></i> --}}
+                                                {{#if this.isLike}}
+                                                <i class="heart-icon like"></i>
+                                                {{else}}
                                                 <i class="heart-icon"></i>
+                                                {{/if}}
                                             </button>
+                                            {{/if}}
                                         </div>
                                         <div class="product-card-name">
                                             {{productname}}
