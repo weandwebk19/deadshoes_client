@@ -11,29 +11,238 @@
         <div class="box">
             <div class="row">
                 <div class="col-xl-3 filter-col" id="filter-col">
-                    <div class="box filter-toggle-box">
-                        <button class="btn-flat btn-hover" id="filter-close">close</button>
-                    </div>
-                    <div class="box">
+                    <form action="/products/filter">
+
+                        <div class="box filter-toggle-box">
+                            <button class="btn-flat btn-hover" id="filter-close">close</button>
+                        </div>
+                        {{!-- <div class="box">
+                            <span class="filter-header">
+                                Categories
+                            </span>
+                            <ul class="filter-list">
+                                <li><a href="?brand=nike">Nike</a></li>
+                                <li><a href="?brand=adidas">Adidas</a></li>
+                                <li><a href="?brand=ananas">Ananas</a></li>
+                                <li><a href="?brand=balenciaga">Balenciaga</a></li>
+                            </ul>
+                        </div> --}}
+                        <div class="input-group mb-3">
+                            <input type="text" class="form-control" placeholder="Nhập tên sản phẩm..." name="name">
+                        </div>
+                        <div class="box">
+                            <span class="filter-header">
+                                Price
+                            </span>
+                            <div class="price-range">
+                                <input type="text" class="price-range-start" value="0" name="price_start">
+                                <span>-</span>
+                                <input type="text" class="price-range-end" value="1000" name="price_end">
+                            </div>
+                        </div>
+                       
+                        <div class="box">
+                             <span class="filter-header">
+                                Brands
+                            </span>
+                            {{!-- <ul class="filter-list">
+                                <li>
+                                    <div class="group-checkbox">
+                                        <input type="checkbox" id="remember1" name="brand" checked="checked" >
+                                        <label for="remember1">
+                                            Nike
+                                        </label>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="group-checkbox">
+                                        <input type="checkbox" id="remember2" name="brand">
+                                        <label for="remember2">
+                                            adidas
+                                        </label>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="group-checkbox">
+                                        <input type="checkbox" id="remember3" name="brand">
+                                        <label for="remember3">
+                                            ananas
+                                        </label>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="group-checkbox">
+                                        <input type="checkbox" id="remember4" name="brand">
+                                        <label for="remember4">
+                                            Fila
+                                        </label>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="group-checkbox">
+                                        <input type="checkbox" id="remember5" name="brand">
+                                        <label for="remember5">
+                                            Balenciaga
+                                        </label>
+                                    </div>
+                                </li> 
+                            </ul> --}}
+                            <div class="form-check mt-4">
+                                <input class="form-check-input" type="radio" value="Nike" id="Nike" name="brand">
+                                <label class="form-check-label" for="Nike">
+                                   Nike
+                                </label>
+                            </div>
+                            <div class="form-check mt-4">
+                                <input class="form-check-input" type="radio" value="Adidas" id="Adidas" name="brand">
+                                <label class="form-check-label" for="Adidas">
+                                    Adidas
+                                </label>
+                            </div>
+                            <div class="form-check mt-4">
+                                <input class="form-check-input" type="radio" value="Ananas" id="Ananas" name="brand">
+                                <label class="form-check-label" for="Ananas">
+                                    Ananas
+                                </label>
+                            </div>
+                            <div class="form-check mt-4">
+                                <input class="form-check-input" type="radio" value="Fila" id="Fila" name="brand">
+                                <label class="form-check-label" for="Fila">
+                                    Fila
+                                </label>
+                            </div>
+                            <div class="form-check mt-4">
+                                <input class="form-check-input" type="radio" value="Balenciaga" id="Balenciaga" name="brand">
+                                <label class="form-check-label" for="Balenciaga">
+                                    Balenciaga
+                                </label>
+                            </div>
+                            <div class="form-check mt-4">
+                                <input class="form-check-input" type="radio" id="all-brand" name="brand" value="" checked>
+                                <label class="form-check-label" for="all-brand">
+                                    All
+                                </label>
+                            </div>
+                        </div>
+                        <div class="box">
+                            <span class="filter-header">
+                                Colors
+                            </span>
+                            <ul class="filter-list">
+                                <li>
+                                    <div class="group-radio">
+                                        <input type="radio" value="red" id="box-red" name="color">
+                                        <label for="box-red">
+                                            Red
+                                        </label>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="group-radio">
+                                        <input type="radio" value="blue" id="box-blue" name="color">
+                                        <label for="box-blue">
+                                            Blue
+                                        </label>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="group-radio">
+                                        <input type="radio" value="white" id="box-white" name="color">
+                                        <label for="box-white">
+                                            White
+                                        </label>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="group-radio">
+                                        <input type="radio" value="black" id="box-black" name="color">
+                                        <label for="box-black">
+                                            Black
+                                        </label </div>
+                                </li>
+                                <li>
+                                    <div class="group-radio">
+                                        <input type="radio" value="green" id="box-green" name="color">
+                                        <label for="box-green">
+                                            Green
+                                        </label>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="group-radio">
+                                        <input type="radio" value="" id="box-all" name="color" checked>
+                                        <label for="box-all">
+                                            All
+                                        </label>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                        <button id="filter-products" type="submit" class="btn btn-secondary ms-4">Lọc sản phẩm</button>
+                    </form>
+                    {{!-- <div class="box">
                         <span class="filter-header">
-                            Categories
+                            customer review
                         </span>
                         <ul class="filter-list">
-                            <li><a href="?brand=nike">Nike</a></li>
-                            <li><a href="?brand=adidas">Adidas</a></li>
-                            <li><a href="?brand=ananas">Ananas</a></li>
-                            <li><a href="?brand=balenciaga">Balenciaga</a></li>
+                            <div class="filter-item">
+                                <input type="radio" id="star-five" name="rating" class="rating" value="five-star"
+                                    checked>
+                                <label for="star-five"><span class="rating">
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                    </span>
+                                </label>
+                            </div>
+                            <div class="filter-item">
+                                <input type="radio" id="star-four" name="rating" class="rating" value="four-star">
+                                <label for="star-four"><span class="rating">
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="far fa-star"></i>
+                                    </span>
+                                </label>
+                            </div>
+                            <div class="filter-item">
+                                <input type="radio" id="star-three" name="rating" class="rating" value="three-star">
+                                <label for="star-three"><span class="rating">
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="far fa-star"></i>
+                                        <i class="far fa-star"></i>
+                                    </span>
+                                </label>
+                            </div>
+                            <div class="filter-item">
+                                <input type="radio" id="star-two" name="rating" class="rating" value="two-star">
+                                <label for="star-two"><span class="rating">
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="far fa-star"></i>
+                                        <i class="far fa-star"></i>
+                                        <i class="far fa-star"></i>
+                                    </span>
+                                </label>
+                            </div>
+                            <div class="filter-item">
+                                <input type="radio" id="star-one" name="rating" class="rating" value="one-star">
+                                <label for="star-one"><span class="rating">
+                                        <i class="fas fa-star"></i>
+                                        <i class="far fa-star"></i>
+                                        <i class="far fa-star"></i>
+                                        <i class="far fa-star"></i>
+                                        <i class="far fa-star"></i>
+                                    </span>
+                                </label>
+                            </div>
                         </ul>
-                    </div>
-                    <div class="box">
-                        <span class="filter-header">
-                            Price
-                        </span>
-                        <div class="price-range">
-                            <input type="text" class="price-range-start" value="0">
-                            <span>-</span>
-                            <input type="text" class="price-range-end" value="1000">
-                        </div>
+                    </div> --}}
                     </div>
                     {{!-- <div class="box">
                         <ul class="filter-list">
@@ -284,7 +493,7 @@
     //    $('.dataTables_length').addClass('bs-select');
     //});
 
-    $(document).on("keyup", "#search-box", function () {
+    /*$(document).on("keyup", "#search-box", function () {
         let data = $(this).val();
         // console.log("Data input: " + data);
         $.ajax({
@@ -302,10 +511,10 @@
                 console.log(response);
             }
         });
-    });
+    });*/
 
 
-    $(document).on("click", "#filter-products", function () {
+    /*$(document).on("click", "#filter-products", function () {
         let price_start = parseFloat(document.querySelector('.price-range-start').value);
         let price_end = parseFloat(document.querySelector('.price-range-end').value);
         const color = document.querySelector('input[type="radio"]:checked').value;
@@ -332,7 +541,7 @@
                 console.log(response);
             }
         });
-    });
+    });*/
 
     updatePaginate({{ totalPages }}, {{ currentPage }});
     updateSelectSize({{ totalPages }}, {{ totalItems }});
