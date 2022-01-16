@@ -179,15 +179,17 @@ class ProductController {
         const productDetail = await ProductsService.show(req.params.productid);
         const shoesize = await ProductsService.loadShoeSize(req.params.productid);
         const feedbacks = await ProductsService.loadFeedbacks(req.params.productid);
+        const relatedProducts = await ProductsService.loadRelatedProducts(req.params.productid, productDetail.brand, productDetail.price, 8);
         // const {brand} = productDetail;
-        const relatedProd = await ProductsService.index(0, 8);
+        // const relatedProd = await ProductsService.index(0, 8);
         // const relatedProducts = ProductService.index(0);
 
         res.render('products/product-detail', {
             productDetail,
+            relatedProducts,
             shoesize: shoesize.rows,
             feedbacks: feedbacks.rows,
-            relatedProd: relatedProd || null
+            // relatedProd: relatedProd || null
         })
     }
 

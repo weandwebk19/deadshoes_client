@@ -111,3 +111,23 @@ exports.loadFeedbacks = async(id) => {
         raw: true
     });
 }
+
+
+exports.loadRelatedProducts = async(id, brand, price, limit) => {
+    const result = await models.products.findAll({
+        where: {
+            productid: {  [Op.ne]: id  },
+            [Op.or]: [
+                {
+                    brand: { [Op.iLike]: `%${brand}%` },
+                },
+                {
+                  price: price
+                }
+              ]
+        },
+        raw: true,
+        limit: limit,
+    });
+    return result;
+}
