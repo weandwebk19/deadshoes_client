@@ -1,10 +1,10 @@
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 const authService = require('../services/AuthService');
+const { sendEmail} = require('../config/nodemailer.config');
 const { user } = require('../services/SiteService');
 const saltRounds = 12;
 const JWT_SECRET = process.env.JWT_SECRET;
-const { sendEmail} = require('../config/nodemailer.config');
 class AuthController {
     // [POST] /reset-password/:id/:token
     reset = async (req, res) => {
@@ -51,7 +51,6 @@ class AuthController {
                 message: 'Token is invalid'
             });
         }
-
     }
 
     // [POST] /forgot-password
@@ -60,7 +59,7 @@ class AuthController {
         const { username } = req.body;
 
         const existedUser = await authService.getAccountByUsername(username);
-        const existedUserInfo = await authService.getCustomerById(existedUser.customerid);
+        let existedUserInfo;
 
         if (!existedUser) {
             console.log('User not found')
@@ -71,6 +70,7 @@ class AuthController {
             });
         } else {
             // User exist and now create a One time link valid for 30 minutes
+            existedUserInfo = await authService.getCustomerById(existedUser.customerid)
             const secret = JWT_SECRET + existedUser.password;
             const payload = {
                 username: existedUser.username,
@@ -83,14 +83,47 @@ class AuthController {
             console.log(existedUserInfo.email)
             sendEmail({
                 to: existedUserInfo.email,
-                subject: 'CÓ CÁI MẬT KHẨU CŨNG QUÊN...',
-                text: `Hi ${existedUser.username}, here's your password reset link:
-                        ${link}
-                        If you didn't request a password reset, please ignore this email.`
+                subject: 'DEADSHOES-RESSET PASSWORD',
+                text: link,
             })
-            console.log(link)
             res.send('Password reset link has been sent to your email');
-        
+        }
+    }
+
+    // [POST] /change-password
+    change = async (req, res) => {
+        const id = req.user.customerid;
+        const { password, confirmPassword } = req.body;
+        console.log(password, confirmPassword)
+        const existedUser = await authService.getAccountByCustomerId(id);
+
+        if (password !== confirmPassword) {
+            res.render('account/change-password', {
+                layout: false,
+                existedUser,
+                errorCode: 1,
+            });
+        } else {
+            const hashPassword = await bcrypt.hash(password, saltRounds);
+            await authService.updatePassword(existedUser.accountid, hashPassword);
+            console.log('update password')
+            res.redirect('/user-information');
+        }
+    }
+
+    // [POST] /password-confirmation
+    confirm = async (req, res) => {
+        const account = await authService.getAccountByCustomerId(req.user.customerid);
+        const {password} = req.body;
+        console.log(account);
+        const matchedPassword = await bcrypt.compare(password, account.password);
+        if(matchedPassword){
+            res.redirect('/change-password');
+        } else {
+            res.render('account/password-confirmation', {
+                layout: false,
+                errorCode: 1,
+            });
         }
     }
 
@@ -123,4 +156,5 @@ class AuthController {
         }
     }
 }
+
 module.exports = new AuthController;

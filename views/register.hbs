@@ -125,6 +125,7 @@
         formGroupSelector: '.input-group',
         rules: [
             Validator.isRequired('#username', "Please enter your username!"),
+            Validator.isUsername('#username', "Username must not contain special characters!"),
             Validator.isRequired('#name', "Please enter your full name!"),
             Validator.isRequired('#address', "Please enter your address!"),
             Validator.isRequired('#phone', "Please enter your phone number!"),

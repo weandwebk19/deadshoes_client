@@ -22,6 +22,7 @@ function Validator(options) {
 
         // Lấy ra các rule của selector
         var rules = selectorRules[rule.selector];
+        // errorMessage = rules[i](inputElement.value);
 
         if (errorMessage) {
             errorElement.innerText = errorMessage;
@@ -104,11 +105,12 @@ function Validator(options) {
             } else {
                 selectorRules[rule.selector] = [rule.test];
             }
+            
 
             var inputElements = formElement.querySelectorAll(rule.selector);
 
             Array.from(inputElements).forEach(function (inputElement) {
-                // Xử lý khi đang nhập
+                // Xử lý khi đang ký
                 var errorElement =
                     inputElement.parentElement.querySelector(
                         ".error-message-box"
@@ -155,6 +157,16 @@ Validator.isEmail = function (selector) {
         test: function (value) {
             var regex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
             return regex.test(value) ? undefined : "Wrong email format!";
+        },
+    };
+};
+
+Validator.isUsername = function (selector, message) {
+    return {
+        selector: selector,
+        test: function (value) {
+            var regex = /^[a-zA-Z0-9]{1,20}$/;
+            return regex.test(value) ? undefined : message || "Wrong username format!";
         },
     };
 };

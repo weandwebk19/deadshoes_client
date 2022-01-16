@@ -16,6 +16,7 @@
                         <div class="box filter-toggle-box">
                             <button class="btn-flat btn-hover" id="filter-close">close</button>
                         </div>
+<<<<<<< HEAD
                         {{!-- <div class="box">
                             <span class="filter-header">
                                 Categories
@@ -243,6 +244,139 @@
                             </div>
                         </ul>
                     </div> --}}
+=======
+                    </div>
+                    {{!-- <div class="box">
+                        <ul class="filter-list">
+                            <li>
+                                <div class="group-checkbox">
+                                    <input type="checkbox" id="status1">
+                                    <label for="status1">
+                                        On sale
+                                    </label>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="group-checkbox">
+                                    <input type="checkbox" id="status2">
+                                    <label for="status2">
+                                        In stock
+                                    </label>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="group-checkbox">
+                                    <input type="checkbox" id="status3">
+                                    <label for="status3">
+                                        Featured
+                                    </label>
+                                </div>
+                            </li>
+                        </ul>
+                    </div> --}}
+                    <div class="box">
+                        {{!-- <span class="filter-header">
+                            Brands
+                        </span>
+                        <ul class="filter-list">
+                            <li>
+                                <div class="group-checkbox">
+                                    <input type="checkbox" id="remember1" checked="checked">
+                                    <label for="remember1">
+                                        Nike
+                                    </label>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="group-checkbox">
+                                    <input type="checkbox" id="remember2">
+                                    <label for="remember2">
+                                        adidas
+                                    </label>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="group-checkbox">
+                                    <input type="checkbox" id="remember3">
+                                    <label for="remember3">
+                                        ananas
+                                    </label>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="group-checkbox">
+                                    <input type="checkbox" id="remember4">
+                                    <label for="remember4">
+                                        Fila
+                                    </label>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="group-checkbox">
+                                    <input type="checkbox" id="remember5">
+                                    <label for="remember5">
+                                        Balenciaga
+                                    </label>
+                                </div>
+                            </li> --}}
+                        </ul>
+                    </div>
+                    <div class="box">
+                        <span class="filter-header">
+                            Colors
+                        </span>
+                        <ul class="filter-list">
+                            <li>
+                                <div class="group-radio">
+                                    <input type="radio" value="red" id="box-red" name="color-check">
+                                    <label for="box-red">
+                                        Red
+                                    </label>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="group-radio">
+                                    <input type="radio" value="blue" id="box-blue" name="color-check">
+                                    <label for="box-blue">
+                                        Blue
+                                    </label>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="group-radio">
+                                    <input type="radio" value="white" id="box-white" name="color-check">
+                                    <label for="box-white">
+                                        White
+                                    </label>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="group-radio">
+                                    <input type="radio" value="black" id="box-black" name="color-check">
+                                    <label for="box-black">
+                                        Black
+                                    </label </div>
+                            </li>
+                            <li>
+                                <div class="group-radio">
+                                    <input type="radio" value="green" id="box-green" name="color-check">
+                                    <label for="box-green">
+                                        Green
+                                    </label>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="group-radio">
+                                    <input type="radio" value="" id="box-all" name="color-check" checked>
+                                    <label for="box-all">
+                                        All
+                                    </label>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                    <button id="filter-products" type="button" class="btn btn-secondary ms-4">Filter</button>
+>>>>>>> 1b84629d1cccdcc3262751bf8d49d74210b6f5ee
                 </div>
                 <div class="col-xl-9 col-lg-12" id="products-content">
                     <div class="box filter-toggle-box">
@@ -265,9 +399,17 @@
                                             <button class="btn-flat btn-hover btn-cart-add" value="{{productid}}">
                                                 <i class="fas fa-shopping-cart"></i>
                                             </button>
-                                            <button class="btn-flat btn-hover btn-wishlít-add" value="{{productid}}">
-                                                <i class="fas fa-heart"></i>
+                                            {{#if user}}
+                                            <button class="btn-flat btn-hover btn-wishlist-add" value="{{productid}}">
+                                                {{!-- <i class="fas fa-heart"></i> --}}
+                                                {{!-- <i class="far fa-heart"></i> --}}
+                                                {{#if this.isLike}}
+                                                <i class="heart-icon like"></i>
+                                                {{else}}
+                                                <i class="heart-icon"></i>
+                                                {{/if}}
                                             </button>
+                                            {{/if}}
                                         </div>
                                         <div class="product-card-name">
                                             {{productname}}

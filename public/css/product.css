@@ -445,14 +445,13 @@ input:checked + label i {
 
 .shoesize-stock {
     display: none;
-    
 }
 
 .shoesize-stock.active {
     display: block;
     margin-top: 0;
     font-size: 14px;
-    color:#7b7979;
+    color: #7b7979;
 }
 
 /* .shoesize-stock.disabled {
@@ -493,6 +492,22 @@ input.shoesize-radio[type="radio"] {
         transform: scale(0.4);
         opacity: 0;
     }
+}
+
+.btn-wishlist-add .like {
+}
+
+.heart-icon:before {
+    font-family: "Font Awesome 5 Free";
+    content: "\f004";
+    font-weight: normal;
+    font-style: normal;
+}
+
+.heart-icon.like:before{
+    content: "\f004";
+    font-weight: bold;
+    font-style: normal;
 }
 
 @media only screen and (max-width: 1280px) {
