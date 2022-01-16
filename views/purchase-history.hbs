@@ -2,6 +2,7 @@
     <div class="container padding-bottom-3x mb-1">
         <!-- Shopping Cart-->
         <div class="table-responsive shopping-cart">
+            <h2 class="heading-section text-center mb-4">Purchase history</h2>
             <table class="table">
                 <thead>
                     <tr>
@@ -26,8 +27,7 @@
                             </div>
                         </td>
                         <td class="text-center">
-                            {{!-- <input class="count-input" min="0" max="50" type="number" value=""> --}}
-                            <div class="product-quantity-wrapper">
+                            <div class="product-quantity-wrapper justify-content-center">
                                 <span class="product-quantity" name="{{this.product.productid}}"
                                     data-count="{{this.amount}}">{{this.amount}}</span>
                             </div>

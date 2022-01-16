@@ -34,16 +34,42 @@ class SiteController {
         }
     }
 
-
     // [GET] /forgot-password
     forgot = async (req, res) => {
         res.render('forgot-password', { layout: false });
     }
 
-    //[GET] /myaccount
-    myAccount = async (req, res) => {
+    // [GET] /change-password/
+    change = async (req, res) => {
         const customer = await SiteService.user(req.user.customerid);
-        res.render('user-information', { customer });
+        const account = await AuthService.getAccountByCustomerId(customer.customerid);
+
+        res.render('account/change-password', {
+            layout: false,
+            account,
+        })
+    }
+
+    // [GET] /password-confirmation
+    confirm = async (req, res) => {
+        const customer = await SiteService.user(req.user.customerid);
+        const account = await AuthService.getAccountByCustomerId(customer.customerid);
+        console.log(customer)
+        res.render('account/password-confirmation', { layout: false, account });
+    }
+
+    // [POST] /user-information
+    updateAccount = async (req, res) => {
+        const { name, email, address, phone } = req.body;
+        await AuthService.updateAccount(req.user.customerid, name, email, address, phone);
+        console.log('update successful')
+        res.redirect('/user-information');
+    }
+
+    //[GET] /user-information
+    showAccount = async (req, res) => {
+        const customer = await SiteService.user(req.user.customerid);
+        res.render('account/user-information', { customer });
     }
 
     // [GET] /login

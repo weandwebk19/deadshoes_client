@@ -63,47 +63,6 @@ class CartController {
                 }
             }
 
-
-            // let cartLength = await CartService.findAndCountAllCart(cart.orderid);
-            // const shoesize = await ProductsService.loadShoeSize(req.params.productid);
-
-            // // if user add to cart directly from the products list, the default shoes size is the first index of its size.
-            // if (!size) {
-            //     size = shoesize.rows[0].size;
-            // }
-
-            // if (cartLength.count != 0) {
-            //     cartLength.rows.forEach(async (order) => {
-            //         if (order.productid === productid && order.size == size) {
-            //             console.log('this is old item - update cart');
-            //             // console.log(order);
-            //             // console.log('amount ' + order.amount)
-            //             // order.amount = order.amount + 1;
-            //             await CartService.increaseCart(order.orderid, order.productid, amount, size);
-            //         } else {
-            //             let existedProduct = await CartService.findDeletedProductById(cart.orderid, productid, size);
-            //             if (existedProduct) {
-            //                 console.log('this is deleted item - update cart');
-            //                 await CartService.restoreCart(order.orderid, existedProduct.productid, size);
-            //                 await CartService.increaseCart(order.orderid, existedProduct.productid, amount, size);
-            //             } else {
-            //                 console.log('this is new item - create cart');
-            //                 await CartService.addToCart(cart.orderid, product.productid, amount, size);
-            //             }
-            //         }
-            //     })
-
-            //     // let existedProduct = await CartService.findAllProductById(cart.orderid, productid, size);
-            //     // console.log("inside")
-            //     // console.log(existedProduct);
-
-            //     // if (!existedProduct) {
-            //     //     console.log('this is new item - add to cart');
-            //     //     // console.log(cart.orderid, product.productid, amount, size);
-            //     //     await CartService.addToCart(cart.orderid, product.productid, amount, size);
-            //     // }
-            // }
-
             if (cartProducts.count == 0) {
                 // let existedProduct = await CartService.findProductById(cart.orderid, productid, size);
                 // if (!existedProduct) {
