@@ -17,7 +17,6 @@ class ProductController {
 
         if (user) {
             const userCart = await CartService.getCartByUserId(user.customerid);
-
             const userWishlist = await WishlistService.getWishlistByUserId(user.customerid);
             let wishlistProds = await WishlistService.findAndCountAllWishlist(userWishlist.wishlistid);
 
@@ -60,7 +59,6 @@ class ProductController {
                 item.isLike = true;
             }
         });
-
         res.render('products/products', {
             user,
             products: response.items,
@@ -75,9 +73,9 @@ class ProductController {
     filter = async (req, res, next) => {
         req.query.price_start=parseFloat(req.query.price_start);
         req.query.price_end=parseFloat(req.query.price_end);
-        const { name, price_start, price_end, brand, color, page, size} = req.query;
+        const { name, price_start, price_end, brand, color, sortByPrice, page, size} = req.query;
         const { limit, offset } = getPagination(page - 1, size);
-        const data = await ProductsService.filter(color, price_start, price_end, name, brand,limit, offset);
+        const data = await ProductsService.filter(color, price_start, price_end, name, brand, sortByPrice, limit, offset);
         const response = getPagingData(data, page, limit);
         res.render('products/products', {
                     products: response.items,
