@@ -35,7 +35,6 @@ class ProductController {
         const data = await ProductsService.listProduct(term, limit, offset);
         const response = getPagingData(data, page, limit);
         let cartItems = await CartService.countCartItems(cart.orderid);
-
         res.render('products/products', {
             products: response.items,
             totalPages: response.totalPages,
@@ -47,35 +46,49 @@ class ProductController {
 
     // [POST] /products/filter/:slug
     filter = async (req, res, next) => {
-        const { page, size, color, price_start, price_end } = req.body;
-        const { limit, offset } = getPagination(page, size);
-
-        const data = await ProductsService.filter(color, price_start, price_end, limit, offset);
+        req.query.price_start=parseFloat(req.query.price_start);
+        req.query.price_end=parseFloat(req.query.price_end);
+        const { name, price_start, price_end, brand, color, page, size} = req.query;
+        const { limit, offset } = getPagination(page - 1, size);
+        const data = await ProductsService.filter(color, price_start, price_end, name, brand,limit, offset);
         const response = getPagingData(data, page, limit);
-        res.render('products/searchProd', {
-            layout: false,
-            products: response.items,
-            totalPages: response.totalPages,
-            currentPage: response.currentPage,
-            totalItems: response.totalItems,
-        });
-
-        //const filterProd = ProductsService.filter(color, price_start, price_end, !isNaN(req.query.page) && req.query.page > 0 ? req.query.page - 1 : 0);
-
-        // filterProd.then(products => {
-        //     let view = {
-        //         products: products.rows,
-        //         layout: false,
-        //         raw: true,
-        //         // pagination: {
-        //         //     page: req.query.page || 1,
-        //         //     pageCount: Math.ceil(products.count / perPage),
-        //         // }
-        //     }
-        //     res.render('products/searchProd', view);
-        // })
-        //     .catch(next);
+        res.render('products/products', {
+                    products: response.items,
+                    totalPages: response.totalPages,
+                    currentPage: response.currentPage,
+                    totalItems: response.totalItems,
+                });
     }
+    // filter = async (req, res, next) => {
+    //     const { page, size, color, price_start, price_end } = req.body;
+    //     const { limit, offset } = getPagination(page, size);
+
+    //     const data = await ProductsService.filter(color, price_start, price_end, limit, offset);
+    //     const response = getPagingData(data, page, limit);
+    //     res.render('products/searchProd', {
+    //         layout: false,
+    //         products: response.items,
+    //         totalPages: response.totalPages,
+    //         currentPage: response.currentPage,
+    //         totalItems: response.totalItems,
+    //     });
+
+    //     //const filterProd = ProductsService.filter(color, price_start, price_end, !isNaN(req.query.page) && req.query.page > 0 ? req.query.page - 1 : 0);
+
+    //     // filterProd.then(products => {
+    //     //     let view = {
+    //     //         products: products.rows,
+    //     //         layout: false,
+    //     //         raw: true,
+    //     //         // pagination: {
+    //     //         //     page: req.query.page || 1,
+    //     //         //     pageCount: Math.ceil(products.count / perPage),
+    //     //         // }
+    //     //     }
+    //     //     res.render('products/searchProd', view);
+    //     // })
+    //     //     .catch(next);
+    // }
 
     feedback = async (req, res, next) => {
         const { feedback, accountid, productid, username } = req.body;

@@ -36,15 +36,19 @@ exports.listProduct = (term, limit, offset) => {
     });
 }
 
-exports.filter = async (color, price_start, price_end, limit, offset) => {
-
+exports.filter = async (color, price_start, price_end, name, brand, limit, offset) => {
     const result = await models.products.findAndCountAll({
         where: {
             color: { [Op.iLike]: `%${color}%` },
+            productname: { [Op.iLike]: `%${name}%` },
             price: {
                 [Op.between]: [price_start, price_end]
-            }
+            },
+            brand: { [Op.iLike]: `%${brand}%` },
         },
+        order: [
+            ['price', 'ASC'],
+        ],
         limit: limit,
         offset: offset,
         raw: true,
