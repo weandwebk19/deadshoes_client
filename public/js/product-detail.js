@@ -3,6 +3,19 @@ let currSizeIndex = 0;
 let currAmount;
 let currAmountIndex = 0;
 
+document.querySelectorAll('.product-img-item').forEach(e => {
+    e.addEventListener('click', () => {
+        let img = e.querySelector('img').getAttribute('src')
+        document.querySelector('#product-img > img').setAttribute('src', img)
+    })
+})
+
+document.querySelector('#view-all-description').addEventListener('click', () => {
+    let content = document.querySelector('.product-detail-description-content')
+    content.classList.toggle('active')
+    document.querySelector('#view-all-description').innerHTML = content.classList.contains('active') ? 'view less' : 'view all'
+})
+
 // choose size
 $('input[type="radio"]:first').attr('checked', true);
 $('.product-info-shoesize .button-labels:first-child').find('label').addClass('active');
