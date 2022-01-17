@@ -17,7 +17,6 @@ class ProductController {
 
         if (user) {
             const userCart = await CartService.getCartByUserId(user.customerid);
-
             const userWishlist = await WishlistService.getWishlistByUserId(user.customerid);
             if (userWishlist) {
                 let wishlistProds = await WishlistService.findAndCountAllWishlist(userWishlist.wishlistid);
@@ -59,7 +58,6 @@ class ProductController {
                 item.isLike = true;
             }
         });
-
         res.render('products/products', {
             user,
             products: response.items,
@@ -74,9 +72,9 @@ class ProductController {
     filter = async (req, res, next) => {
         req.query.price_start=parseFloat(req.query.price_start);
         req.query.price_end=parseFloat(req.query.price_end);
-        const { name, price_start, price_end, brand, color, page, size} = req.query;
+        const { name, price_start, price_end, brand, color, sortByPrice, page, size} = req.query;
         const { limit, offset } = getPagination(page - 1, size);
-        const data = await ProductsService.filter(color, price_start, price_end, name, brand,limit, offset);
+        const data = await ProductsService.filter(color, price_start, price_end, name, brand, sortByPrice, limit, offset);
         const response = getPagingData(data, page, limit);
         res.render('products/products', {
                     products: response.items,
@@ -180,15 +178,17 @@ class ProductController {
         const productDetail = await ProductsService.show(req.params.productid);
         const shoesize = await ProductsService.loadShoeSize(req.params.productid);
         const feedbacks = await ProductsService.loadFeedbacks(req.params.productid);
+        const relatedProducts = await ProductsService.loadRelatedProducts(req.params.productid, productDetail.brand, productDetail.price, 8);
         // const {brand} = productDetail;
-        const relatedProd = await ProductsService.index(0, 8);
+        // const relatedProd = await ProductsService.index(0, 8);
         // const relatedProducts = ProductService.index(0);
 
         res.render('products/product-detail', {
             productDetail,
+            relatedProducts,
             shoesize: shoesize.rows,
             feedbacks: feedbacks.rows,
-            relatedProd: relatedProd || null
+            // relatedProd: relatedProd || null
         })
     }
 
