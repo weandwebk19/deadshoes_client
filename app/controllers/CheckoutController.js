@@ -43,6 +43,7 @@ class CheckoutController {
             }
 
             res.render('checkout', {
+                user,
                 cart,
                 cartProducts,
                 cartProductsDetail,
@@ -56,7 +57,6 @@ class CheckoutController {
     //[DELETE] /checkout/:orderid
     destroy = async (req, res, next) => {
         const { user } = req;
-        const unauthId = req.session.unauthId;
         const { orderid } = req.params;
 
         await CartService.updatePurchased(orderid);

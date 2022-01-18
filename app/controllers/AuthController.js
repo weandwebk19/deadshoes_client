@@ -38,10 +38,7 @@ class AuthController {
                 console.log('Password updated')
             }
 
-            res.render('home', {
-                layout: false,
-                username: existedUser.username,
-            });
+            res.redirect('/');
         }
         catch (error) {
             console.log(error)

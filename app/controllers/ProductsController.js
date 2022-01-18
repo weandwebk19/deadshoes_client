@@ -18,13 +18,12 @@ class ProductController {
         if (user) {
             const userCart = await CartService.getCartByUserId(user.customerid);
             const userWishlist = await WishlistService.getWishlistByUserId(user.customerid);
-            let wishlistProds = await WishlistService.findAndCountAllWishlist(userWishlist.wishlistid);
-
-            
-            for (let i = 0; i < wishlistProds.count; i++) {
-                wishlistArr.push(wishlistProds.rows[i].productid);
+            if (userWishlist) {
+                let wishlistProds = await WishlistService.findAndCountAllWishlist(userWishlist.wishlistid);
+                for (let i = 0; i < wishlistProds.count; i++) {
+                    wishlistArr.push(wishlistProds.rows[i].productid);
+                }
             }
-
             if (!userCart) {
                 cart = await CartService.createCart(user.customerid);
             } else {
@@ -55,7 +54,7 @@ class ProductController {
             item.isLike = false;
         });
         response.items.forEach(item => {
-            if(wishlistArr.includes(item.productid)) {
+            if (wishlistArr.includes(item.productid)) {
                 item.isLike = true;
             }
         });

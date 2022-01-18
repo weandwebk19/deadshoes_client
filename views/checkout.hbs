@@ -22,35 +22,50 @@
                                             <div class="form-group">
                                                 <label class="label text-white" for="name">Full Name</label>
                                                 <input type="text" class="form-control checkout-form-control"
-                                                    name="name" id="name" placeholder="{{customer.name}}">
+                                                    name="name" id="name" value="{{customer.name}}">
+                                                <div class="error-message-box">
+                                                    &nbsp;
+                                                </div>
                                             </div>
                                         </div>
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label class="label text-white" for="email">Email Address</label>
                                                 <input type="email" class="form-control checkout-form-control "
-                                                    name="email" id="email" placeholder="{{customer.email}}">
+                                                    name="email" id="email" value="{{customer.email}}">
+                                                <div class="error-message-box">
+                                                    &nbsp;
+                                                </div>
                                             </div>
                                         </div>
                                         <div class="col-md-6">
                                             <div class="form-group">
-                                                <label class="label text-white" for="email">Phone</label>
+                                                <label class="label text-white" for="phone">Phone</label>
                                                 <input type="text" class="form-control checkout-form-control"
-                                                    name="phone" id="phone" placeholder="{{customer.phone}}">
+                                                    name="phone" id="phone" value="{{customer.phone}}">
+                                                <div class="error-message-box">
+                                                    &nbsp;
+                                                </div>
                                             </div>
                                         </div>
                                         <div class="col-md-6">
                                             <div class="form-group">
-                                                <label class="label text-white" for="email">Address</label>
+                                                <label class="label text-white" for="address">Address</label>
                                                 <input type="text" class="form-control checkout-form-control"
-                                                    name="address" id="address" placeholder="{{customer.address}}">
+                                                    name="address" id="address" value="{{customer.address}}">
+                                                <div class="error-message-box">
+                                                    &nbsp;
+                                                </div>
                                             </div>
                                         </div>
                                         <div class="col-md-12">
                                             <div class="form-group">
-                                                <label class="label" for="#">Note</label>
+                                                <label class="label" for="message">Note</label>
                                                 <textarea name="message" class="form-control checkout-form-control"
                                                     id="message" cols="30" rows="4" placeholder="Message"></textarea>
+                                                <div class="error-message-box">
+                                                    &nbsp;
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -117,10 +132,15 @@
                         </div>
                     </div>
                     <div class="checkout-btn d-flex">
-                        <a href="/cart" type="button" class="mt-4 me-2 submit-checkout btn btn-outline-secondary">Back to cart</a>
+                        <a href="/cart" type="button" class="mt-4 me-2 submit-checkout btn btn-outline-secondary">Back
+                            to cart</a>
                         <button type="button" class="mt-4 submit-checkout btn btn-primary flex-grow-1"
                             id="btn-proceed-order" order="{{cart.orderid}}">Proceed to payment</button>
                     </div>
+                    {{#unless user}}
+                    <p class="text-warning">Looks like you don't have an account in the store, please fill out the receiver's informations!</p>
+                    <p class="text-info">...or <span class="text-primary"><a href="/register"> Register now</a></span> for special updates, offers and promotions!</p>
+                    {{/unless}}
                 </div>
             </form>
         </div>
@@ -129,3 +149,20 @@
 
 <script src="/js/jquery-3.6.0.min.js"></script>
 <script src="/js/checkout.js"></script>
+<script src="/js/validation.js"></script>
+<script>
+    Validator({
+        errorSelector: '.error-message-box',
+        form: '#checkoutForm',
+        formGroupSelector: '.form-group',
+        rules: [
+            Validator.isRequired('#name', "Please enter the receiver's name!"),
+            Validator.isRequired('#address', "Please enter your address!"),
+            Validator.isRequired('#phone', "Please enter your phone number!"),
+            Validator.isEmail('#email'),
+        ],
+        onSubmit: function (data) {
+            console.log(data);
+        }
+    });
+</script>

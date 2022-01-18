@@ -153,6 +153,7 @@
                     </div>
                     <div class="box">
                         <div class="row gx-4 gy-4" id="products">
+                            {{#if user}}
                             {{#each products}}
                             <div class="col-lg-4 col-md-6 col-sm-12">
                                 <div class="product-card">
@@ -168,31 +169,52 @@
                                             <button class="btn-flat btn-hover btn-cart-add" value="{{productid}}">
                                                 <i class="fas fa-shopping-cart"></i>
                                             </button>
-                                            {{#if user}}
                                             <button class="btn-flat btn-hover btn-wishlist-add" value="{{productid}}">
-                                                {{!-- <i class="fas fa-heart"></i> --}}
-                                                {{!-- <i class="far fa-heart"></i> --}}
                                                 {{#if this.isLike}}
                                                 <i class="heart-icon like"></i>
                                                 {{else}}
                                                 <i class="heart-icon"></i>
                                                 {{/if}}
                                             </button>
-                                            {{/if}}
                                         </div>
                                         <div class="product-card-name">
                                             {{productname}}
                                         </div>
                                         <div class="product-card-price">
-                                            {{!-- <span><del>$${e.old_price}</del></span> --}}
                                             <span class="curr-price">${{price}}</span>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            {{else}}
-                            <p>No products available</p>
                             {{/each}}
+                            {{else}}
+                            {{#each products}}
+                            <div class="col-lg-4 col-md-6 col-sm-12">
+                                <div class="product-card">
+                                    <div class="product-card-img">
+                                        <img src="{{image.[0]}}" alt="">
+                                        <img src="{{image.[1]}}" alt="">
+                                    </div>
+                                    <div class="product-card-info">
+                                        <div class="product-btn">
+                                            <a href="/products/{{productid}}"
+                                                class="btn-flat btn-hover btn-shop-now">shop
+                                                now</a>
+                                            <button class="btn-flat btn-hover btn-cart-add" value="{{productid}}">
+                                                <i class="fas fa-shopping-cart"></i>
+                                            </button>
+                                        </div>
+                                        <div class="product-card-name">
+                                            {{productname}}
+                                        </div>
+                                        <div class="product-card-price">
+                                            <span class="curr-price">${{price}}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            {{/each}}
+                            {{/if}}
                             <div class="box">
                                 <div class="dataTables_paginate paging_simple_numbers" id="dataTable_paginate">
                                     <div class="box">

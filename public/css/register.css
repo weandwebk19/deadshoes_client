@@ -1696,7 +1696,8 @@ html {
     border-color: #f33a58;
 }
 
-.input-group.invalid .error-message-box {
+.input-group.invalid .error-message-box,
+.form-group.invalid .error-message-box {
     color: #f33a58;
 }
 
